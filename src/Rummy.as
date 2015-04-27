@@ -132,7 +132,7 @@ import fl.transitions.Tween;
             if(stack.length<imageNames.length){
                 bitmapLoader();
             }else{
-                stack.pop();
+                removeChild(stack.pop());
                 cardState.pop();
                 moveToFirstPlayerHand();
             }
@@ -255,37 +255,9 @@ import fl.transitions.Tween;
         // Handles Event.ENTER_FRAME events. 
         private function enterFrameListener (e:Event):void {
             //trace("onEnterFrame: " + timerCounter++ + " : " + getTimer());
-            if(moveInProgress) {
-                
-            }else{
-                
-            }
-            
-            if(countCardsOnTable()==6){ 
-                trace("there are 6 cards on the table. next move");
-                
-            }
-            var tableCardsCounter = 0;
-            var player1CardsCounter = 0;
-            var player2CardsCounter = 0;
-            for(var i:int=0;i<cardState.length;i++){
-                if(cardState[i]==3){
-                    tableCardsCounter++;
-                    //trace("card " + i + " on table");
-                    //moveOut(stack[i]);
-                }
-                if(cardState[i]==1){
-                    player1CardsCounter++;
-                    //trace("1: " + i);
-                    //moveToPlayer1Hand(stack[i], player1CardsCounter);
-                }
-                if(cardState[i]==2){
-                    player2CardsCounter++;
-                    //trace("2: " + i);
-                    //moveToPlayer2Hand(stack[i]);
-                }
-                
-            }
+            //for(var i:int=0;i<cardState.length;i++){
+                //check something
+            //}
         }
         
         private function rearrangeCardsOnHands():void{
