@@ -59,7 +59,7 @@ import fl.transitions.Tween;
             bitmapData = new BitmapData(1000, 600, false, 0x707070);
             addChild(new Bitmap(bitmapData));
             
-            createTestCards();
+            //createTestCards();
             
             loadCardsToStack();
             createNextMoveButton();
@@ -74,8 +74,8 @@ import fl.transitions.Tween;
             //next move button 
             var button:Sprite = new Sprite();
             button.addChild(new Bitmap(new BitmapData(150, 90, false, 0x9f9f00)));
-            button.x = 800;
-            button.y = 400;
+            button.x = 1200;
+            button.y = 300;
             var text:TextField = new TextField();
             text.text = "next move";
             button.addChild(text);
@@ -210,8 +210,8 @@ import fl.transitions.Tween;
             new Animator(sprite).animateTo(300 + shift, 150, animationDuration);
         }
         
-        private function moveOut(sprite: Sprite):void{
-            new Animator(sprite).animateTo(1200, 150, animationDuration);
+        private function moveOut(sprite: Sprite, shift: int):void{
+            new Animator(sprite).animateTo(1200, 10 + shift, animationDuration);
         }
         
         private function handleNextMove(e:MouseEvent):void{
@@ -247,7 +247,7 @@ import fl.transitions.Tween;
             for(var i:int=0;i<cardState.length;i++){
                 if(cardState[i]==3){
                     cardState[i]=4;
-                    moveOut(stack[i]);
+                    moveOut(stack[i], 0);
                 }
             }
         }
@@ -344,7 +344,7 @@ import fl.transitions.Tween;
             s1.x = 800;
             s1.y = 400;
             var text:TextField = new TextField();
-            text.text = "next move";
+            text.text = "old code";
             s1.addChild(text);
             addChild(s1);
             s1.addEventListener(MouseEvent.MOUSE_DOWN, generalMoveToCenter);
