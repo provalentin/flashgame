@@ -16,7 +16,7 @@ import Animator;
 
 import fl.transitions.Tween;
 	
-    [SWF(width=1280, height=800, frameRate=10, backgroundColor=0xE2E2E2)]
+    [SWF(width=1500, height=800, frameRate=10, backgroundColor=0xE2E2E2)]
     public class Rummy extends Sprite{
         //background image
         [Embed(source="../img/welcomeScreen.png")]
@@ -124,7 +124,7 @@ import fl.transitions.Tween;
             var s3:Sprite = new Sprite();
             s3.addChild(loader.content);
             bitmapDataList.push(loader.content);
-            s3.x = 50 + stack.length * 0;
+            s3.x = 10 + stack.length * 0;
             s3.y = 10 + stack.length * 2;
             addChild(s3);
             stack.push(s3);
@@ -147,7 +147,7 @@ import fl.transitions.Tween;
                 //sprite.addChild(new Bitmap(bitmapDataList[52].bitmapData));
                 firstPlayerHand.push(sprite);
                 var animator:Animator = new Animator(sprite);
-                animator.animateTo(300 + 50*i, -150, animationDuration + i*100);
+                animator.animateTo(100 + 150*i, -150, animationDuration + i*100);
                 trace("stack size: " + stack.length + " 1: " + firstPlayerHand.length);
             }
             
@@ -163,7 +163,7 @@ import fl.transitions.Tween;
                 secondPlayerHand.push(sprite);
                 //sprite.addChild(new Bitmap(bitmapDataList[52].bitmapData));
                 var animator:Animator = new Animator(sprite);
-                animator.animateTo(300 + 50*i, 400, animationDuration + i*100);
+                animator.animateTo(100 + 150*i, 400, animationDuration + i*100);
                 trace("stack size: " + stack.length + " 1: " + secondPlayerHand.length);
             }
             trace("cardState: " + cardState);
@@ -171,11 +171,11 @@ import fl.transitions.Tween;
         }
         
         private function moveToPlayer1Hand(sprite: Sprite, shift: int):void{
-            new Animator(sprite).animateTo(300 + 50 * shift,  -150, animationDuration );
+            new Animator(sprite).animateTo(100 + 150 * shift,  -150, animationDuration );
         }
         
         private function moveToPlayer2Hand(sprite: Sprite, shift: int):void{
-            new Animator(sprite).animateTo(300 + 50 * shift, 400, animationDuration );
+            new Animator(sprite).animateTo(100 + 150 * shift, 400, animationDuration );
         }
         
         private function onClickHandler(e: MouseEvent):void{
@@ -185,6 +185,7 @@ import fl.transitions.Tween;
             cardState[cardIndex] = 3;
             trace("card state: " + cardState);
             trace("cards on table: " + countCardsOnTable());
+            rearrangeCardsOnHands();
         }
         
         private function countCardsOnTable():uint {
@@ -226,7 +227,7 @@ import fl.transitions.Tween;
                 trace("last 0 index: " + index);
                 if(index!=-1){
                     cardState[index] = 1;
-                    moveToPlayer1Hand(stack[index], i);
+                    moveToPlayer1Hand(stack[index], i+1);
                 }
             }
             var p2cards:uint = countCardsOnHand(2);
@@ -236,7 +237,7 @@ import fl.transitions.Tween;
                 trace("last 0 index: " + index);
                 if(index!=-1){
                     cardState[index] = 2;
-                    moveToPlayer2Hand(stack[index], i);
+                    moveToPlayer2Hand(stack[index], i+1);
                 }
             }
             
@@ -270,7 +271,7 @@ import fl.transitions.Tween;
             for(var i:int=0;i<cardState.length;i++){
                 if(cardState[i]==3){
                     tableCardsCounter++;
-                    trace("card " + i + " on table");
+                    //trace("card " + i + " on table");
                     //moveOut(stack[i]);
                 }
                 if(cardState[i]==1){
@@ -291,7 +292,7 @@ import fl.transitions.Tween;
             var tableCardsCounter = 0;
             var player1CardsCounter = 0;
             var player2CardsCounter = 0;
-            for(var i:int=0;i<cardState.length;i++){
+            for(var i:int=cardState.length-1;i>=0;i--){
                 if(cardState[i]==3){
                     tableCardsCounter++;
                     trace("card " + i + " on table");
@@ -301,6 +302,8 @@ import fl.transitions.Tween;
                     player1CardsCounter++;
                     //trace("1: " + i);
                     moveToPlayer1Hand(stack[i], player1CardsCounter);
+                    trace("card: " + i + " z-index: " +  getChildIndex(stack[i]));
+                    //setChildIndex(stack[i], player1CardsCounter);
                 }
                 if(cardState[i]==2){
                     player2CardsCounter++;
