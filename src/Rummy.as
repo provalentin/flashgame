@@ -14,14 +14,124 @@ import flash.text.TextField;
 
 import Animator;
 
-import fl.transitions.Tween;
-	
     [SWF(width=1500, height=800, frameRate=10, backgroundColor=0xE2E2E2)]
     public class Rummy extends Sprite{
         //background image
         [Embed(source="../img/welcomeScreen.png")]
         public var WelcomeScreen:Class;
 
+        //spades
+        [Embed(source="../img/s1.png")]
+        public var Bitmaps1: Class;
+        [Embed(source="../img/s2.png")]
+        public var Bitmaps2: Class;
+        [Embed(source="../img/s3.png")]
+        public var Bitmaps3: Class;
+        [Embed(source="../img/s4.png")]
+        public var Bitmaps4: Class;
+        [Embed(source="../img/s5.png")]
+        public var Bitmaps5: Class;
+        [Embed(source="../img/s6.png")]
+        public var Bitmaps6: Class;
+        [Embed(source="../img/s7.png")]
+        public var Bitmaps7: Class;
+        [Embed(source="../img/s8.png")]
+        public var Bitmaps8: Class;
+        [Embed(source="../img/s9.png")]
+        public var Bitmaps9: Class;
+        [Embed(source="../img/s10.png")]
+        public var Bitmaps10: Class;
+        [Embed(source="../img/s11.png")]
+        public var Bitmaps11: Class;
+        [Embed(source="../img/s12.png")]
+        public var Bitmaps12: Class;
+        [Embed(source="../img/s13.png")]
+        public var Bitmaps13: Class;
+        
+        //hearts
+        [Embed(source="../img/h1.png")]
+        public var Bitmaph1: Class;
+        [Embed(source="../img/h2.png")]
+        public var Bitmaph2: Class;
+        [Embed(source="../img/h3.png")]
+        public var Bitmaph3: Class;
+        [Embed(source="../img/h4.png")]
+        public var Bitmaph4: Class;
+        [Embed(source="../img/h5.png")]
+        public var Bitmaph5: Class;
+        [Embed(source="../img/h6.png")]
+        public var Bitmaph6: Class;
+        [Embed(source="../img/h7.png")]
+        public var Bitmaph7: Class;
+        [Embed(source="../img/h8.png")]
+        public var Bitmaph8: Class;
+        [Embed(source="../img/h9.png")]
+        public var Bitmaph9: Class;
+        [Embed(source="../img/h10.png")]
+        public var Bitmaph10: Class;
+        [Embed(source="../img/h11.png")]
+        public var Bitmaph11: Class;
+        [Embed(source="../img/h12.png")]
+        public var Bitmaph12: Class;
+        [Embed(source="../img/h13.png")]
+        public var Bitmaph13: Class;
+        
+        //clubs
+        [Embed(source="../img/c1.png")]
+        public var Bitmapc1: Class;
+        [Embed(source="../img/c2.png")]
+        public var Bitmapc2: Class;
+        [Embed(source="../img/c3.png")]
+        public var Bitmapc3: Class;
+        [Embed(source="../img/c4.png")]
+        public var Bitmapc4: Class;
+        [Embed(source="../img/c5.png")]
+        public var Bitmapc5: Class;
+        [Embed(source="../img/c6.png")]
+        public var Bitmapc6: Class;
+        [Embed(source="../img/c7.png")]
+        public var Bitmapc7: Class;
+        [Embed(source="../img/c8.png")]
+        public var Bitmapc8: Class;
+        [Embed(source="../img/c9.png")]
+        public var Bitmapc9: Class;
+        [Embed(source="../img/c10.png")]
+        public var Bitmapc10: Class;
+        [Embed(source="../img/c11.png")]
+        public var Bitmapc11: Class;
+        [Embed(source="../img/c12.png")]
+        public var Bitmapc12: Class;
+        [Embed(source="../img/c13.png")]
+        public var Bitmapc13: Class;
+        
+        //diamonds
+        [Embed(source="../img/d1.png")]
+        public var Bitmapd1: Class;
+        [Embed(source="../img/d2.png")]
+        public var Bitmapd2: Class;
+        [Embed(source="../img/d3.png")]
+        public var Bitmapd3: Class;
+        [Embed(source="../img/d4.png")]
+        public var Bitmapd4: Class;
+        [Embed(source="../img/d5.png")]
+        public var Bitmapd5: Class;
+        [Embed(source="../img/d6.png")]
+        public var Bitmapd6: Class;
+        [Embed(source="../img/d7.png")]
+        public var Bitmapd7: Class;
+        [Embed(source="../img/d8.png")]
+        public var Bitmapd8: Class;
+        [Embed(source="../img/d9.png")]
+        public var Bitmapd9: Class;
+        [Embed(source="../img/d10.png")]
+        public var Bitmapd10: Class;
+        [Embed(source="../img/d11.png")]
+        public var Bitmapd11: Class;
+        [Embed(source="../img/d12.png")]
+        public var Bitmapd12: Class;
+        [Embed(source="../img/d13.png")]
+        public var Bitmapd13: Class;
+        
         //card images
         [Embed(source="../img/s1.png")]
         public var s1Bitmap: Class;
@@ -49,6 +159,8 @@ import fl.transitions.Tween;
         public var animationDuration = 2000;
         
         public var isFirstPlayerMove: Boolean = false;
+        
+        public var textLog:TextField = new TextField();
 
         public function Rummy(){
             //stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -61,7 +173,7 @@ import fl.transitions.Tween;
             bitmapData = new BitmapData(1000, 600, false, 0x707070);
             addChild(new Bitmap(bitmapData));
             
-            //createTestCards();
+            createTestCards();
             
             loadCardsToStack();
             createNextMoveButton();
@@ -69,6 +181,78 @@ import fl.transitions.Tween;
             
         }
 
+        private function loadStaticBitmaps():void{
+                      
+            
+            bitmapDataList.push(new Bitmap((new Bitmaps1 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaps2 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaps3 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaps4 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaps5 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaps6 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaps7 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaps8 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaps9 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaps10 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaps11 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaps12 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaps13 as Bitmap).bitmapData));
+            
+            bitmapDataList.push(new Bitmap((new Bitmaph1 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaph2 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaph3 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaph4 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaph5 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaph6 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaph7 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaph8 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaph9 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaph10 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaph11 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaph12 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaph13 as Bitmap).bitmapData));
+            
+            
+            bitmapDataList.push(new Bitmap((new Bitmapc1 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapc2 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapc3 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapc4 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapc5 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapc6 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapc7 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapc8 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapc9 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapc10 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapc11 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapc12 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapc13 as Bitmap).bitmapData));
+            
+            
+            bitmapDataList.push(new Bitmap((new Bitmapd1 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapd2 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapd3 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapd4 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapd5 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapd6 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapd7 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapd8 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapd9 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapd10 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapd11 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapd12 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapd13 as Bitmap).bitmapData));
+            
+            for(var i:int=0;i<bitmapDataList.length;i++){
+                var s1:Sprite = new Sprite();
+                s1.addChild(bitmapDataList[i]);
+                s1.x = 10 + stack.length * 0;
+                s1.y = 10 + stack.length * 2;
+                addChild(s1);
+                stack.push(s1);
+            }
+                   
+        }
+        
         private var loader:Loader; // The bitmap loader
         private var moveInProgress:Boolean;
         
@@ -109,20 +293,26 @@ import fl.transitions.Tween;
                 imageNames.push("../img/h"+ i + ".png");
             }
             imageNames.push("../img/cover.png");
+            println("\n before loading images");
             
-            bitmapLoader();
+            loadStaticBitmaps();
+            
+            //bitmapLoader();
         }
 
         public function bitmapLoader( ):void {
             loader = new Loader( );
             loader.contentLoaderInfo.addEventListener(Event.COMPLETE,	loadCompleteListener);
             loader.load(new URLRequest(imageNames[stack.length]));
-            trace(imageNames[stack.length]);
+            //println("\n bitmap loader");
+            //trace(imageNames[stack.length]);
             cardState.push(0);
         }
         
         // Triggered when the bitmap has been loaded and initialized
         private function loadCompleteListener (e:Event):void {
+            println("\n img complete \n stack: " + stack.length);
+            println("\n c: " + loader.content);
             var s3:Sprite = new Sprite();
             s3.addChild(loader.content);
             bitmapDataList.push(loader.content);
@@ -131,7 +321,9 @@ import fl.transitions.Tween;
             addChild(s3);
             stack.push(s3);
             s3.addEventListener(MouseEvent.MOUSE_DOWN, onClickHandler);
+            ///println("\n stack: " + stack.length);
             if(stack.length<imageNames.length){
+                println("\n stack: " + stack.length);
                 bitmapLoader();
             }else{
                 removeChild(stack.pop());
@@ -341,6 +533,14 @@ import fl.transitions.Tween;
             addChild(s2);
             s2.addEventListener(MouseEvent.MOUSE_DOWN, moveToCenter2);
             trace("start loading images");
+            
+            textLog.text = "initial log";
+            addChild(textLog);
+            
+        }
+        
+        private function println(s: String):void{
+            textLog.text = textLog.text + s;
         }
     }
 }
