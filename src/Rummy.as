@@ -176,6 +176,7 @@ import Animator;
             createTestCards();
             
             loadCardsToStack();
+            moveToFirstPlayerHand();
             createNextMoveButton();
             //var myTween:Tween = new Tween(myObject, "x", Elastic.easeOut, 0, 300, 3, true);
             
@@ -247,8 +248,10 @@ import Animator;
                 s1.addChild(bitmapDataList[i]);
                 s1.x = 10 + stack.length * 0;
                 s1.y = 10 + stack.length * 2;
+                s1.addEventListener(MouseEvent.MOUSE_DOWN, onClickHandler);
                 addChild(s1);
                 stack.push(s1);
+                cardState.push(0);
             }
                    
         }
@@ -535,6 +538,8 @@ import Animator;
             trace("start loading images");
             
             textLog.text = "initial log";
+            textLog.x = 800;
+            textLog.y = 800;
             addChild(textLog);
             
         }
