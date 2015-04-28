@@ -47,6 +47,8 @@ import fl.transitions.Tween;
 
         public var animator:Animator;
         public var animationDuration = 2000;
+        
+        public var isFirstPlayerMove: Boolean = false;
 
         public function Rummy(){
             //stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -181,11 +183,15 @@ import fl.transitions.Tween;
         private function onClickHandler(e: MouseEvent):void{
             var cardIndex:int = stack.indexOf(e.currentTarget as Sprite);
             trace("click on  x: " + e.currentTarget.x + " y: " + e.currentTarget.y + " target : " + imageNames[cardIndex] + " : " + cardIndex);
-            moveToCenter(e.currentTarget as Sprite, 20 * countCardsOnTable() + 200 * (Math.floor(countCardsOnTable()/2)));
-            cardState[cardIndex] = 3;
-            trace("card state: " + cardState);
-            trace("cards on table: " + countCardsOnTable());
-            rearrangeCardsOnHands();
+            if((isFirstPlayerMove && cardState[cardIndex] == 1) 
+                || (!isFirstPlayerMove && cardState[cardIndex] == 2)){
+                moveToCenter(e.currentTarget as Sprite, 20 * countCardsOnTable() + 200 * (Math.floor(countCardsOnTable()/2)));
+                cardState[cardIndex] = 3;
+                trace(isFirstPlayerMove + " :card state: " + cardState );
+                trace("cards on table: " + countCardsOnTable());
+                rearrangeCardsOnHands();
+                isFirstPlayerMove = !isFirstPlayerMove;
+            }
         }
         
         private function countCardsOnTable():uint {
