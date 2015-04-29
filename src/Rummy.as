@@ -132,13 +132,15 @@ import Animator;
                 var s1:Sprite = new Sprite();
                 s1.addChild(bitmapDataList[i]);
                 s1.x = 10 + stack.length * 0;
-                s1.y = 10 + stack.length * 2;
+                s1.y = 110 + stack.length * 1;
                 s1.addEventListener(MouseEvent.MOUSE_DOWN, onClickHandler);
                 addChild(s1);
                 stack.push(s1);
                 cardState.push(0);
             }
-                   
+            stack[0].rotation = 90;
+            stack[0].x = 300;
+            stack[0].y = 200;
         }
         
         private var loader:Loader; // The bitmap loader
@@ -373,7 +375,7 @@ import Animator;
             
             //TODO: need to check stack.length 
             var p1cards:uint = countCardsOnHand(1);
-            trace("p1cards: " + p1cards);
+            trace("p1cards:  " + p1cards);
             for(var i:int=p1cards;i<6;i++){
                 var index:int = cardState.lastIndexOf(0);
                 //trace("last 0 index: " + index);
