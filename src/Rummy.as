@@ -44,6 +44,7 @@ import Animator;
         public var isFirstPlayerMove: Boolean = false;
         public var lastCardPoints:int;
         public var lastCardIndex: int;
+        public var mainKind: int = 3;
         
         public var textLog:TextField = new TextField();
 
@@ -193,6 +194,7 @@ import Animator;
                         points.push(j+i*100);
                 }
             }
+            //mainKind = getKind(0);
             
             loadStaticBitmaps();
             
@@ -294,7 +296,9 @@ import Animator;
                     //trace("!!! " + point + ":" + kind +  " " + lastPoint + ":" + lastKind);
                     if((kind==lastKind)&&(point>lastPoint)){
                         return true;
-                    }else{
+                    }else if(kind==mainKind){    
+                        return true;
+                    }else {
                         trace("!!!kind is different!!!!!");
                         return false;
                     }
