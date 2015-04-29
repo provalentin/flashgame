@@ -71,11 +71,11 @@ import Animator;
         private function loadStaticBitmaps():void{
                       
             
-            bitmapDataList.push(new Bitmap((new Bitmaps1 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaps2 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaps3 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaps4 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaps5 as Bitmap).bitmapData));
+            
+//            bitmapDataList.push(new Bitmap((new Bitmaps2 as Bitmap).bitmapData));
+//            bitmapDataList.push(new Bitmap((new Bitmaps3 as Bitmap).bitmapData));
+//            bitmapDataList.push(new Bitmap((new Bitmaps4 as Bitmap).bitmapData));
+//            bitmapDataList.push(new Bitmap((new Bitmaps5 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmaps6 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmaps7 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmaps8 as Bitmap).bitmapData));
@@ -84,12 +84,13 @@ import Animator;
             bitmapDataList.push(new Bitmap((new Bitmaps11 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmaps12 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmaps13 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaps1 as Bitmap).bitmapData));
             
-            bitmapDataList.push(new Bitmap((new Bitmaph1 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaph2 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaph3 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaph4 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaph5 as Bitmap).bitmapData));
+            
+//            bitmapDataList.push(new Bitmap((new Bitmaph2 as Bitmap).bitmapData));
+//            bitmapDataList.push(new Bitmap((new Bitmaph3 as Bitmap).bitmapData));
+//            bitmapDataList.push(new Bitmap((new Bitmaph4 as Bitmap).bitmapData));
+//            bitmapDataList.push(new Bitmap((new Bitmaph5 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmaph6 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmaph7 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmaph8 as Bitmap).bitmapData));
@@ -98,13 +99,14 @@ import Animator;
             bitmapDataList.push(new Bitmap((new Bitmaph11 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmaph12 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmaph13 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmaph1 as Bitmap).bitmapData));
             
             
-            bitmapDataList.push(new Bitmap((new Bitmapc1 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapc2 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapc3 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapc4 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapc5 as Bitmap).bitmapData));
+            
+//            bitmapDataList.push(new Bitmap((new Bitmapc2 as Bitmap).bitmapData));
+//            bitmapDataList.push(new Bitmap((new Bitmapc3 as Bitmap).bitmapData));
+//            bitmapDataList.push(new Bitmap((new Bitmapc4 as Bitmap).bitmapData));
+//            bitmapDataList.push(new Bitmap((new Bitmapc5 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmapc6 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmapc7 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmapc8 as Bitmap).bitmapData));
@@ -113,13 +115,14 @@ import Animator;
             bitmapDataList.push(new Bitmap((new Bitmapc11 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmapc12 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmapc13 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapc1 as Bitmap).bitmapData));
             
             
-            bitmapDataList.push(new Bitmap((new Bitmapd1 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapd2 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapd3 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapd4 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapd5 as Bitmap).bitmapData));
+            
+//            bitmapDataList.push(new Bitmap((new Bitmapd2 as Bitmap).bitmapData));
+//            bitmapDataList.push(new Bitmap((new Bitmapd3 as Bitmap).bitmapData));
+//            bitmapDataList.push(new Bitmap((new Bitmapd4 as Bitmap).bitmapData));
+//            bitmapDataList.push(new Bitmap((new Bitmapd5 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmapd6 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmapd7 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmapd8 as Bitmap).bitmapData));
@@ -128,6 +131,7 @@ import Animator;
             bitmapDataList.push(new Bitmap((new Bitmapd11 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmapd12 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmapd13 as Bitmap).bitmapData));
+            bitmapDataList.push(new Bitmap((new Bitmapd1 as Bitmap).bitmapData));
             
             for(var i:int=0;i<bitmapDataList.length;i++){
                 var s1:Sprite = new Sprite();
@@ -187,11 +191,8 @@ import Animator;
             println("\n before loading images");
             
             for(var i:int = 1;i<5;i++){
-                for(var j:int = 1;j<14;j++){
-                    if(j==1) 
-                        points.push(14 + i*100)
-                    else 
-                        points.push(j+i*100);
+                for(var j:int = 6;j<=14;j++){
+                    points.push(j+i*100);
                 }
             }
             //mainKind = getKind(0);
@@ -237,8 +238,8 @@ import Animator;
             trace("cardState: " + cardState);
             trace("points: " + points);
             for(var i:int = 1;i<7;i++){
-                var sprite:Sprite = stack[52-i];
-                cardState[52-i] = 1;
+                var sprite:Sprite = stack[36-i];
+                cardState[36-i] = 1;
                 //this is the way to hide cards
                 //sprite.addChild(new Bitmap(bitmapDataList[52].bitmapData));
                 firstPlayerHand.push(sprite);
@@ -254,8 +255,8 @@ import Animator;
         private function moveToSecondPlayerHand():void{
             trace("cardState: " + cardState);
             for(var i:int = 1;i<7;i++){
-                var sprite:Sprite = stack[46-i];
-                cardState[46-i] = 2;
+                var sprite:Sprite = stack[30-i];
+                cardState[30-i] = 2;
                 secondPlayerHand.push(sprite);
                 //sprite.addChild(new Bitmap(bitmapDataList[52].bitmapData));
                 var animator:Animator = new Animator(sprite);
