@@ -346,8 +346,29 @@ import Animator;
         }
         
         private function handleNextMove(e:MouseEvent):void{
-            trace("handle next move: clean up table");
-            cleanUpTable();
+            trace("handle next move:  " + isFirstPlayerMove);
+            if(countCardsOnTable()%2==0){
+                trace("clean up table");
+                cleanUpTable();
+            }else{
+                trace("cards # " + countCardsOnTable());
+                if(isFirstPlayerMove){
+                    for(var i:int=0;i<cardState.length;i++){
+                        if(cardState[i]==3){
+                            cardState[i]=1;
+                            moveToPlayer1Hand(stack[i], 6);
+                        }
+                    }
+                }else{
+                    for(var i:int=0;i<cardState.length;i++){
+                        if(cardState[i]==3){
+                            cardState[i]=2;
+                            moveToPlayer2Hand(stack[i], 6);
+                        }
+                    }
+                }
+                //isFirstPlayerMove = !isFirstPlayerMove;
+            }
             rearrangeCardsOnHands();
             
             //TODO: need to check stack.length 
@@ -371,6 +392,7 @@ import Animator;
                     moveToPlayer2Hand(stack[index], i+1);
                 }
             }
+            isFirstPlayerMove = !isFirstPlayerMove;
             
         }
         
