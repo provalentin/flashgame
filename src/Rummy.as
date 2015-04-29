@@ -14,127 +14,9 @@ import flash.text.TextField;
 
 import Animator;
 
-    [SWF(width=1500, height=800, frameRate=10, backgroundColor=0xE2E2E2)]
+    [SWF(width=1500, height=800, frameRate=20, backgroundColor=0xE2E2E2)]
     public class Rummy extends Sprite{
-        //background image
-        [Embed(source="../img/welcomeScreen.png")]
-        public var WelcomeScreen:Class;
-
-        //spades
-        [Embed(source="../img/s1.png")]
-        public var Bitmaps1: Class;
-        [Embed(source="../img/s2.png")]
-        public var Bitmaps2: Class;
-        [Embed(source="../img/s3.png")]
-        public var Bitmaps3: Class;
-        [Embed(source="../img/s4.png")]
-        public var Bitmaps4: Class;
-        [Embed(source="../img/s5.png")]
-        public var Bitmaps5: Class;
-        [Embed(source="../img/s6.png")]
-        public var Bitmaps6: Class;
-        [Embed(source="../img/s7.png")]
-        public var Bitmaps7: Class;
-        [Embed(source="../img/s8.png")]
-        public var Bitmaps8: Class;
-        [Embed(source="../img/s9.png")]
-        public var Bitmaps9: Class;
-        [Embed(source="../img/s10.png")]
-        public var Bitmaps10: Class;
-        [Embed(source="../img/s11.png")]
-        public var Bitmaps11: Class;
-        [Embed(source="../img/s12.png")]
-        public var Bitmaps12: Class;
-        [Embed(source="../img/s13.png")]
-        public var Bitmaps13: Class;
         
-        //hearts
-        [Embed(source="../img/h1.png")]
-        public var Bitmaph1: Class;
-        [Embed(source="../img/h2.png")]
-        public var Bitmaph2: Class;
-        [Embed(source="../img/h3.png")]
-        public var Bitmaph3: Class;
-        [Embed(source="../img/h4.png")]
-        public var Bitmaph4: Class;
-        [Embed(source="../img/h5.png")]
-        public var Bitmaph5: Class;
-        [Embed(source="../img/h6.png")]
-        public var Bitmaph6: Class;
-        [Embed(source="../img/h7.png")]
-        public var Bitmaph7: Class;
-        [Embed(source="../img/h8.png")]
-        public var Bitmaph8: Class;
-        [Embed(source="../img/h9.png")]
-        public var Bitmaph9: Class;
-        [Embed(source="../img/h10.png")]
-        public var Bitmaph10: Class;
-        [Embed(source="../img/h11.png")]
-        public var Bitmaph11: Class;
-        [Embed(source="../img/h12.png")]
-        public var Bitmaph12: Class;
-        [Embed(source="../img/h13.png")]
-        public var Bitmaph13: Class;
-        
-        //clubs
-        [Embed(source="../img/c1.png")]
-        public var Bitmapc1: Class;
-        [Embed(source="../img/c2.png")]
-        public var Bitmapc2: Class;
-        [Embed(source="../img/c3.png")]
-        public var Bitmapc3: Class;
-        [Embed(source="../img/c4.png")]
-        public var Bitmapc4: Class;
-        [Embed(source="../img/c5.png")]
-        public var Bitmapc5: Class;
-        [Embed(source="../img/c6.png")]
-        public var Bitmapc6: Class;
-        [Embed(source="../img/c7.png")]
-        public var Bitmapc7: Class;
-        [Embed(source="../img/c8.png")]
-        public var Bitmapc8: Class;
-        [Embed(source="../img/c9.png")]
-        public var Bitmapc9: Class;
-        [Embed(source="../img/c10.png")]
-        public var Bitmapc10: Class;
-        [Embed(source="../img/c11.png")]
-        public var Bitmapc11: Class;
-        [Embed(source="../img/c12.png")]
-        public var Bitmapc12: Class;
-        [Embed(source="../img/c13.png")]
-        public var Bitmapc13: Class;
-        
-        //diamonds
-        [Embed(source="../img/d1.png")]
-        public var Bitmapd1: Class;
-        [Embed(source="../img/d2.png")]
-        public var Bitmapd2: Class;
-        [Embed(source="../img/d3.png")]
-        public var Bitmapd3: Class;
-        [Embed(source="../img/d4.png")]
-        public var Bitmapd4: Class;
-        [Embed(source="../img/d5.png")]
-        public var Bitmapd5: Class;
-        [Embed(source="../img/d6.png")]
-        public var Bitmapd6: Class;
-        [Embed(source="../img/d7.png")]
-        public var Bitmapd7: Class;
-        [Embed(source="../img/d8.png")]
-        public var Bitmapd8: Class;
-        [Embed(source="../img/d9.png")]
-        public var Bitmapd9: Class;
-        [Embed(source="../img/d10.png")]
-        public var Bitmapd10: Class;
-        [Embed(source="../img/d11.png")]
-        public var Bitmapd11: Class;
-        [Embed(source="../img/d12.png")]
-        public var Bitmapd12: Class;
-        [Embed(source="../img/d13.png")]
-        public var Bitmapd13: Class;
-        
-        //card images
-        [Embed(source="../img/s1.png")]
-        public var s1Bitmap: Class;
         public var s1:Sprite;
 
         [Embed(source="../img/s2.png")]
@@ -144,6 +26,7 @@ import Animator;
 
         public var imageNamePrefix: Array.<String> = ["c", "d", "s", "h"];
         public var imageNames:Vector.<String>;
+        public var points:Vector.<int> = new Vector.<int>;
         
         public var stack:Vector.<Sprite>;
         public var firstPlayerHand:Vector.<Sprite>;
@@ -156,9 +39,11 @@ import Animator;
         public var spritesheet:BitmapData;
 
         public var animator:Animator;
-        public var animationDuration = 2000;
+        public var animationDuration = 1000;
         
         public var isFirstPlayerMove: Boolean = false;
+        public var lastCardPoints:int;
+        public var lastCardIndex: int;
         
         public var textLog:TextField = new TextField();
 
@@ -298,6 +183,15 @@ import Animator;
             imageNames.push("../img/cover.png");
             println("\n before loading images");
             
+            for(var i:int = 1;i<5;i++){
+                for(var j:int = 1;j<14;j++){
+                    if(j==1) 
+                        points.push(14 + i*100)
+                    else 
+                        points.push(j+i*100);
+                }
+            }
+            
             loadStaticBitmaps();
             
             //bitmapLoader();
@@ -337,6 +231,7 @@ import Animator;
 
         private function moveToFirstPlayerHand():void{
             trace("cardState: " + cardState);
+            trace("points: " + points);
             for(var i:int = 1;i<7;i++){
                 var sprite:Sprite = stack[52-i];
                 cardState[52-i] = 1;
@@ -375,13 +270,48 @@ import Animator;
             new Animator(sprite).animateTo(100 + 150 * shift, 400, animationDuration );
         }
         
+        private function getKind(index:int):int{
+            return (points[index] - (points[index]%100) ) /100;
+        }
+        
+        private function getValue(index:int):int{
+            return points[index]%100;
+        }
+        
+        private function isAllowed(index: int):Boolean{
+            //trace("table cards: " + countCardsOnTable());
+            //trace("1pts vs 2pts: " + points[index] + " ~ " + points[lastCardIndex]);
+            if ((isFirstPlayerMove && cardState[index] == 1) 
+                || (!isFirstPlayerMove && cardState[index] == 2)){
+                if(countCardsOnTable() % 2 == 1){
+                    //trace("!!!need to check points!!!!!");
+                    var point:int = points[index] % 100;
+                    var kind :int = (points[index] - (points[index]%100) ) /100;
+                    var lastPoint:int = points[lastCardIndex] % 100;
+                    var lastKind :int = (points[lastCardIndex] - (points[lastCardIndex]%100) ) /100;
+                    //trace("!!! " + point + ":" + kind +  " " + lastPoint + ":" + lastKind);
+                    if((kind==lastKind)&&(point>lastPoint)){
+                        return true;
+                    }else{
+                        trace("!!!kind is different!!!!!");
+                        return false;
+                    }
+                }else{
+                    return true;
+                }
+            }
+            return false;
+        }
+        
         private function onClickHandler(e: MouseEvent):void{
             var cardIndex:int = stack.indexOf(e.currentTarget as Sprite);
             trace("click on  x: " + e.currentTarget.x + " y: " + e.currentTarget.y + " target : " + imageNames[cardIndex] + " : " + cardIndex);
-            if((isFirstPlayerMove && cardState[cardIndex] == 1) 
-                || (!isFirstPlayerMove && cardState[cardIndex] == 2)){
+            trace("pts: " + points[cardIndex]  + " lastCard pts: " + points[lastCardIndex]);
+            if(isAllowed(cardIndex)){
                 moveToCenter(e.currentTarget as Sprite, 20 * countCardsOnTable() + 200 * (Math.floor(countCardsOnTable()/2)));
                 cardState[cardIndex] = 3;
+                lastCardIndex = cardIndex;
+                lastCardPoints = points[cardIndex];
                 trace(isFirstPlayerMove + " :card state: " + cardState );
                 trace("cards on table: " + countCardsOnTable());
                 rearrangeCardsOnHands();
@@ -425,7 +355,7 @@ import Animator;
             trace("p1cards: " + p1cards);
             for(var i:int=p1cards;i<6;i++){
                 var index:int = cardState.lastIndexOf(0);
-                trace("last 0 index: " + index);
+                //trace("last 0 index: " + index);
                 if(index!=-1){
                     cardState[index] = 1;
                     moveToPlayer1Hand(stack[index], i+1);
@@ -435,7 +365,7 @@ import Animator;
             trace("p2cards: "  + p2cards);
             for(var i:int=p2cards;i<6;i++){
                 var index:int = cardState.lastIndexOf(0);
-                trace("last 0 index: " + index);
+                //trace("last 0 index: " + index);
                 if(index!=-1){
                     cardState[index] = 2;
                     moveToPlayer2Hand(stack[index], i+1);
@@ -468,14 +398,14 @@ import Animator;
             for(var i:int=cardState.length-1;i>=0;i--){
                 if(cardState[i]==3){
                     tableCardsCounter++;
-                    trace("card " + i + " on table");
+                    //trace("card " + i + " on table");
                     //moveOut(stack[i]);
                 }
                 if(cardState[i]==1){
                     player1CardsCounter++;
                     //trace("1: " + i);
                     moveToPlayer1Hand(stack[i], player1CardsCounter);
-                    trace("card: " + i + " z-index: " +  getChildIndex(stack[i]));
+                    //trace("card: " + i + " z-index: " +  getChildIndex(stack[i]));
                     //setChildIndex(stack[i], player1CardsCounter);
                 }
                 if(cardState[i]==2){
@@ -519,7 +449,7 @@ import Animator;
             var text:TextField = new TextField();
             text.text = "old code";
             s1.addChild(text);
-            addChild(s1);
+            //addChild(s1);
             s1.addEventListener(MouseEvent.MOUSE_DOWN, generalMoveToCenter);
             
             //animator = new Animator(s1);
@@ -547,5 +477,125 @@ import Animator;
         private function println(s: String):void{
             textLog.text = textLog.text + s;
         }
+        
+        //background image
+        [Embed(source="../img/welcomeScreen.png")]
+        public var WelcomeScreen:Class;
+        
+        //spades
+        [Embed(source="../img/s1.png")]
+        public var Bitmaps1: Class;
+        [Embed(source="../img/s2.png")]
+        public var Bitmaps2: Class;
+        [Embed(source="../img/s3.png")]
+        public var Bitmaps3: Class;
+        [Embed(source="../img/s4.png")]
+        public var Bitmaps4: Class;
+        [Embed(source="../img/s5.png")]
+        public var Bitmaps5: Class;
+        [Embed(source="../img/s6.png")]
+        public var Bitmaps6: Class;
+        [Embed(source="../img/s7.png")]
+        public var Bitmaps7: Class;
+        [Embed(source="../img/s8.png")]
+        public var Bitmaps8: Class;
+        [Embed(source="../img/s9.png")]
+        public var Bitmaps9: Class;
+        [Embed(source="../img/s10.png")]
+        public var Bitmaps10: Class;
+        [Embed(source="../img/s11.png")]
+        public var Bitmaps11: Class;
+        [Embed(source="../img/s12.png")]
+        public var Bitmaps12: Class;
+        [Embed(source="../img/s13.png")]
+        public var Bitmaps13: Class;
+        
+        //hearts
+        [Embed(source="../img/h1.png")]
+        public var Bitmaph1: Class;
+        [Embed(source="../img/h2.png")]
+        public var Bitmaph2: Class;
+        [Embed(source="../img/h3.png")]
+        public var Bitmaph3: Class;
+        [Embed(source="../img/h4.png")]
+        public var Bitmaph4: Class;
+        [Embed(source="../img/h5.png")]
+        public var Bitmaph5: Class;
+        [Embed(source="../img/h6.png")]
+        public var Bitmaph6: Class;
+        [Embed(source="../img/h7.png")]
+        public var Bitmaph7: Class;
+        [Embed(source="../img/h8.png")]
+        public var Bitmaph8: Class;
+        [Embed(source="../img/h9.png")]
+        public var Bitmaph9: Class;
+        [Embed(source="../img/h10.png")]
+        public var Bitmaph10: Class;
+        [Embed(source="../img/h11.png")]
+        public var Bitmaph11: Class;
+        [Embed(source="../img/h12.png")]
+        public var Bitmaph12: Class;
+        [Embed(source="../img/h13.png")]
+        public var Bitmaph13: Class;
+        
+        //clubs
+        [Embed(source="../img/c1.png")]
+        public var Bitmapc1: Class;
+        [Embed(source="../img/c2.png")]
+        public var Bitmapc2: Class;
+        [Embed(source="../img/c3.png")]
+        public var Bitmapc3: Class;
+        [Embed(source="../img/c4.png")]
+        public var Bitmapc4: Class;
+        [Embed(source="../img/c5.png")]
+        public var Bitmapc5: Class;
+        [Embed(source="../img/c6.png")]
+        public var Bitmapc6: Class;
+        [Embed(source="../img/c7.png")]
+        public var Bitmapc7: Class;
+        [Embed(source="../img/c8.png")]
+        public var Bitmapc8: Class;
+        [Embed(source="../img/c9.png")]
+        public var Bitmapc9: Class;
+        [Embed(source="../img/c10.png")]
+        public var Bitmapc10: Class;
+        [Embed(source="../img/c11.png")]
+        public var Bitmapc11: Class;
+        [Embed(source="../img/c12.png")]
+        public var Bitmapc12: Class;
+        [Embed(source="../img/c13.png")]
+        public var Bitmapc13: Class;
+        
+        //diamonds
+        [Embed(source="../img/d1.png")]
+        public var Bitmapd1: Class;
+        [Embed(source="../img/d2.png")]
+        public var Bitmapd2: Class;
+        [Embed(source="../img/d3.png")]
+        public var Bitmapd3: Class;
+        [Embed(source="../img/d4.png")]
+        public var Bitmapd4: Class;
+        [Embed(source="../img/d5.png")]
+        public var Bitmapd5: Class;
+        [Embed(source="../img/d6.png")]
+        public var Bitmapd6: Class;
+        [Embed(source="../img/d7.png")]
+        public var Bitmapd7: Class;
+        [Embed(source="../img/d8.png")]
+        public var Bitmapd8: Class;
+        [Embed(source="../img/d9.png")]
+        public var Bitmapd9: Class;
+        [Embed(source="../img/d10.png")]
+        public var Bitmapd10: Class;
+        [Embed(source="../img/d11.png")]
+        public var Bitmapd11: Class;
+        [Embed(source="../img/d12.png")]
+        public var Bitmapd12: Class;
+        [Embed(source="../img/d13.png")]
+        public var Bitmapd13: Class;
+        
+        //card images
+        [Embed(source="../img/s1.png")]
+        public var s1Bitmap: Class;
     }
 }
