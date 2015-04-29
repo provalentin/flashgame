@@ -44,7 +44,7 @@ import Animator;
         public var isFirstPlayerMove: Boolean = false;
         public var lastCardPoints:int;
         public var lastCardIndex: int;
-        public var mainKind: int = 3;
+        public var mainKind: int = 1;
         
         public var textLog:TextField = new TextField();
 
@@ -195,7 +195,7 @@ import Animator;
                     points.push(j+i*100);
                 }
             }
-            //mainKind = getKind(0);
+            mainKind = getKind(0);
             
             loadStaticBitmaps();
             
@@ -303,6 +303,20 @@ import Animator;
                         trace("!!!kind is different!!!!!");
                         return false;
                     }
+                }else if((countCardsOnTable() % 2 == 0)&&(countCardsOnTable()>1)){
+                    //trace("search for similar cards..." + point);
+                    var point:int = points[index] % 100;
+                    var flag:Boolean = false;
+                    for(var i:int =0;i<cardState.length;i++){
+                        if(cardState[i]==3){
+                            //trace("p:" + points[i]);
+                            if(point==getValue(i)){
+                                //trace("!!!flag is true : " + i + " ~ " + index);
+                                flag=true;
+                            }
+                        }
+                    }
+                    return flag;
                 }else{
                     return true;
                 }
