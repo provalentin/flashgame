@@ -39,7 +39,7 @@ import Animator;
         public var spritesheet:BitmapData;
 
         public var animator:Animator;
-        public var animationDuration = 1000;
+        public var animationDuration = 500;
         
         public var isFirstPlayerMove: Boolean = false;
         public var lastCardPoints:int;
@@ -143,9 +143,13 @@ import Animator;
                 stack.push(s1);
                 cardState.push(0);
             }
-            stack[0].rotation = 90;
-            stack[0].x = 300;
-            stack[0].y = 200;
+			
+			var mainKindIndex = Math.floor(Math.random() * 36);
+			mainKind = getKind(mainKindIndex);
+			stack[mainKindIndex].rotation = 90;
+			stack[mainKindIndex].x = 300;
+			stack[mainKindIndex].y = 200;
+            
         }
         
         private var loader:Loader; // The bitmap loader
@@ -195,7 +199,7 @@ import Animator;
                     points.push(j+i*100);
                 }
             }
-            mainKind = getKind(0);
+			
             
             loadStaticBitmaps();
             
@@ -233,13 +237,24 @@ import Animator;
                 moveToFirstPlayerHand();
             }
         }
+		
+		private function getNextRandom():uint {
+			var value:uint;
+			while(true){
+				value = Math.floor(Math.random() * 36);
+				if(cardState[value] == 0) break
+			}
+			return value;
+			
+		}
 
         private function moveToFirstPlayerHand():void{
             trace("cardState: " + cardState);
             trace("points: " + points);
             for(var i:int = 1;i<7;i++){
-                var sprite:Sprite = stack[36-i];
-                cardState[36-i] = 1;
+				var rnd: uint = getNextRandom();
+                var sprite:Sprite = stack[rnd];
+                cardState[rnd] = 1;
                 //this is the way to hide cards
                 //sprite.addChild(new Bitmap(bitmapDataList[52].bitmapData));
                 firstPlayerHand.push(sprite);
@@ -255,8 +270,9 @@ import Animator;
         private function moveToSecondPlayerHand():void{
             trace("cardState: " + cardState);
             for(var i:int = 1;i<7;i++){
-                var sprite:Sprite = stack[30-i];
-                cardState[30-i] = 2;
+				var rnd: uint = getNextRandom();
+                var sprite:Sprite = stack[rnd];
+                cardState[rnd] = 2;
                 secondPlayerHand.push(sprite);
                 //sprite.addChild(new Bitmap(bitmapDataList[52].bitmapData));
                 var animator:Animator = new Animator(sprite);
