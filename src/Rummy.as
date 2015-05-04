@@ -55,9 +55,9 @@ import Animator;
 
 
             //background
-            bitmapData = (new WelcomeScreen() as Bitmap).bitmapData;
-            bitmapData = new BitmapData(1000, 600, false, 0x707070);
-            addChild(new Bitmap(bitmapData));
+            //bitmapData = (new WelcomeScreen() as Bitmap).bitmapData;
+            //bitmapData = new BitmapData(1000, 600, false, 0x707070);
+            //addChild(new Bitmap(bitmapData));
             
             createTestCards();
             
@@ -146,9 +146,9 @@ import Animator;
 			
 			var mainKindIndex = Math.floor(Math.random() * 36);
 			mainKind = getKind(mainKindIndex);
-			stack[mainKindIndex].rotation = 90;
-			stack[mainKindIndex].x = 300;
-			stack[mainKindIndex].y = 200;
+			//stack[mainKindIndex].rotation = 90;
+			stack[mainKindIndex].x = 100;
+			stack[mainKindIndex].y = 150;
             
         }
         
@@ -259,7 +259,7 @@ import Animator;
                 //sprite.addChild(new Bitmap(bitmapDataList[52].bitmapData));
                 firstPlayerHand.push(sprite);
                 var animator:Animator = new Animator(sprite);
-                animator.animateTo(100 + 150*i, -150, animationDuration + i*100);
+                animator.animateTo(50 + 180*i, -150, animationDuration + i*100);
                 trace("stack size: " + stack.length + " 1: " + firstPlayerHand.length);
             }
             
@@ -276,7 +276,7 @@ import Animator;
                 secondPlayerHand.push(sprite);
                 //sprite.addChild(new Bitmap(bitmapDataList[52].bitmapData));
                 var animator:Animator = new Animator(sprite);
-                animator.animateTo(100 + 150*i, 400, animationDuration + i*100);
+                animator.animateTo(50 + 180*i, 400, animationDuration + i*100);
                 trace("stack size: " + stack.length + " 1: " + secondPlayerHand.length);
             }
             trace("cardState: " + cardState);
@@ -284,11 +284,11 @@ import Animator;
         }
         
         private function moveToPlayer1Hand(sprite: Sprite, shift: int):void{
-            new Animator(sprite).animateTo(100 + 150 * shift,  -150, animationDuration );
+            new Animator(sprite).animateTo(50 + 180 * shift,  -150, animationDuration );
         }
         
         private function moveToPlayer2Hand(sprite: Sprite, shift: int):void{
-            new Animator(sprite).animateTo(100 + 150 * shift, 400, animationDuration );
+            new Animator(sprite).animateTo(50 + 180 * shift, 400, animationDuration );
         }
         
         private function getKind(index:int):int{
