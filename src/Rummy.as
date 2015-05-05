@@ -45,6 +45,7 @@ import Animator;
         public var lastCardPoints:int;
         public var lastCardIndex: int;
         public var mainKind: int = 1;
+		public var mainKindIndex:int = 0;
         
         public var textLog:TextField = new TextField();
 
@@ -144,7 +145,7 @@ import Animator;
                 cardState.push(0);
             }
 			
-			var mainKindIndex = Math.floor(Math.random() * 36);
+			mainKindIndex = Math.floor(Math.random() * 36);
 			mainKind = getKind(mainKindIndex);
 			//stack[mainKindIndex].rotation = 90;
 			stack[mainKindIndex].x = 100;
@@ -242,7 +243,11 @@ import Animator;
 			var value:uint;
 			while(true){
 				value = Math.floor(Math.random() * 36);
-				if(cardState[value] == 0) break
+				if(mainKindIndex==value){
+					if(countCardsOnHand(0)==1) break;
+				}else{	
+					if(cardState[value] == 0) break;
+				}
 			}
 			return value;
 			
@@ -412,7 +417,7 @@ import Animator;
             var p1cards:uint = countCardsOnHand(1);
             trace("p1cards:  " + p1cards);
             for(var i:int=p1cards;i<6;i++){
-                var index:int = cardState.lastIndexOf(0);
+                var index:int = getNextRandom();
                 //trace("last 0 index: " + index);
                 if(index!=-1){
                     cardState[index] = 1;
@@ -422,7 +427,7 @@ import Animator;
             var p2cards:uint = countCardsOnHand(2);
             trace("p2cards: "  + p2cards);
             for(var i:int=p2cards;i<6;i++){
-                var index:int = cardState.lastIndexOf(0);
+                var index:int = getNextRandom();
                 //trace("last 0 index: " + index);
                 if(index!=-1){
                     cardState[index] = 2;
