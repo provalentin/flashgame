@@ -69,7 +69,7 @@ import Animator;
             
         }
 
-        private function loadStaticBitmaps():void{
+        private function loadBitmapDataList():void{
                       
             
             
@@ -134,25 +134,29 @@ import Animator;
             bitmapDataList.push(new Bitmap((new Bitmapd13 as Bitmap).bitmapData));
             bitmapDataList.push(new Bitmap((new Bitmapd1 as Bitmap).bitmapData));
             
-            for(var i:int=0;i<bitmapDataList.length;i++){
-                var s1:Sprite = new Sprite();
-                s1.addChild(bitmapDataList[i]);
-                s1.x = 10 + stack.length * 0;
-                s1.y = 110 + stack.length * 1;
-                s1.addEventListener(MouseEvent.MOUSE_DOWN, onClickHandler);
-                addChild(s1);
-                stack.push(s1);
-                cardState.push(0);
-            }
+            
+            
+        }
+        
+		private function initStack(){
+			for(var i:int=0;i<bitmapDataList.length;i++){
+				var s1:Sprite = new Sprite();
+				s1.addChild(bitmapDataList[i]);
+				s1.x = 10 + stack.length * 0;
+				s1.y = 110 + stack.length * 1;
+				s1.addEventListener(MouseEvent.MOUSE_DOWN, onClickHandler);
+				addChild(s1);
+				stack.push(s1);
+				cardState.push(0);
+			}
 			
 			mainKindIndex = Math.floor(Math.random() * 36);
 			mainKind = getKind(mainKindIndex);
 			//stack[mainKindIndex].rotation = 90;
 			stack[mainKindIndex].x = 100;
 			stack[mainKindIndex].y = 150;
-            
-        }
-        
+		}
+		
         private var loader:Loader; // The bitmap loader
         private var moveInProgress:Boolean;
         
@@ -202,7 +206,8 @@ import Animator;
             }
 			
             
-            loadStaticBitmaps();
+            loadBitmapDataList();
+			initStack(); 
             
             //bitmapLoader();
         }
