@@ -14,7 +14,7 @@ import flash.text.TextField;
 
 import Animator;
 
-    [SWF(width=1500, height=800, frameRate=20, backgroundColor=0xE2E2E2)]
+    [SWF(width=1500, height=800, frameRate=30, backgroundColor=0xE2E2E2)]
     public class Rummy extends Sprite{
         
         public var s1:Sprite;
@@ -48,12 +48,13 @@ import Animator;
 		public var mainKindIndex:int = 0;
         
         public var textLog:TextField = new TextField();
+		private var loader:Loader; // The bitmap loader
+		private var moveInProgress:Boolean;
 
         public function Rummy(){
             //stage.scaleMode = StageScaleMode.NO_SCALE;
             stage.align = StageAlign.LEFT;
             stage.quality = StageQuality.BEST;
-
 
             //background
             //bitmapData = (new WelcomeScreen() as Bitmap).bitmapData;
@@ -63,82 +64,14 @@ import Animator;
             createTestCards();
             
             loadCardsToStack();
+			loadBitmapDataList();
+			initStack(); 
             moveToFirstPlayerHand();
+			moveToSecondPlayerHand();
             createNextMoveButton();
-            //var myTween:Tween = new Tween(myObject, "x", Elastic.easeOut, 0, 300, 3, true);
-            
-        }
-
-        private function loadBitmapDataList():void{
-                      
-            
-            
-//            bitmapDataList.push(new Bitmap((new Bitmaps2 as Bitmap).bitmapData));
-//            bitmapDataList.push(new Bitmap((new Bitmaps3 as Bitmap).bitmapData));
-//            bitmapDataList.push(new Bitmap((new Bitmaps4 as Bitmap).bitmapData));
-//            bitmapDataList.push(new Bitmap((new Bitmaps5 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaps6 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaps7 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaps8 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaps9 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaps10 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaps11 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaps12 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaps13 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaps1 as Bitmap).bitmapData));
-            
-            
-//            bitmapDataList.push(new Bitmap((new Bitmaph2 as Bitmap).bitmapData));
-//            bitmapDataList.push(new Bitmap((new Bitmaph3 as Bitmap).bitmapData));
-//            bitmapDataList.push(new Bitmap((new Bitmaph4 as Bitmap).bitmapData));
-//            bitmapDataList.push(new Bitmap((new Bitmaph5 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaph6 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaph7 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaph8 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaph9 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaph10 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaph11 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaph12 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaph13 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmaph1 as Bitmap).bitmapData));
-            
-            
-            
-//            bitmapDataList.push(new Bitmap((new Bitmapc2 as Bitmap).bitmapData));
-//            bitmapDataList.push(new Bitmap((new Bitmapc3 as Bitmap).bitmapData));
-//            bitmapDataList.push(new Bitmap((new Bitmapc4 as Bitmap).bitmapData));
-//            bitmapDataList.push(new Bitmap((new Bitmapc5 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapc6 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapc7 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapc8 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapc9 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapc10 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapc11 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapc12 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapc13 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapc1 as Bitmap).bitmapData));
-            
-            
-            
-//            bitmapDataList.push(new Bitmap((new Bitmapd2 as Bitmap).bitmapData));
-//            bitmapDataList.push(new Bitmap((new Bitmapd3 as Bitmap).bitmapData));
-//            bitmapDataList.push(new Bitmap((new Bitmapd4 as Bitmap).bitmapData));
-//            bitmapDataList.push(new Bitmap((new Bitmapd5 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapd6 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapd7 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapd8 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapd9 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapd10 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapd11 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapd12 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapd13 as Bitmap).bitmapData));
-            bitmapDataList.push(new Bitmap((new Bitmapd1 as Bitmap).bitmapData));
-            
-            
-            
         }
         
-		private function initStack(){
+		private function initStack():void{
 			for(var i:int=0;i<bitmapDataList.length;i++){
 				var s1:Sprite = new Sprite();
 				s1.addChild(bitmapDataList[i]);
@@ -156,12 +89,8 @@ import Animator;
 			stack[mainKindIndex].x = 100;
 			stack[mainKindIndex].y = 150;
 		}
-		
-        private var loader:Loader; // The bitmap loader
-        private var moveInProgress:Boolean;
         
         private function createNextMoveButton():void{
-            //next move button 
             var button:Sprite = new Sprite();
             button.addChild(new Bitmap(new BitmapData(150, 90, false, 0x9f9f00)));
             button.x = 1200;
@@ -171,79 +100,21 @@ import Animator;
             button.addChild(text);
             addChild(button);
             button.addEventListener(MouseEvent.MOUSE_DOWN, handleNextMove);
-            
         }
         
-        
         private function loadCardsToStack():void{
-            //card stack
             stack =             new Vector.<Sprite>;
             firstPlayerHand =   new Vector.<Sprite>;
             secondPlayerHand =  new Vector.<Sprite>;
             cardState =         new Vector.<uint>;
             bitmapDataList =        new Vector.<Bitmap>;
-            //stack.push(s1, s2);
-            imageNames = new Vector.<String>;
-            for(var i:int = 1; i<14; i++){
-                imageNames.push("../img/c"+ i + ".png");
-            }
-            for(var i:int = 1; i<14; i++){
-                imageNames.push("../img/d"+ i + ".png");
-            }
-            for(var i:int = 1; i<14; i++){
-                imageNames.push("../img/s"+ i + ".png");
-            }
-            for(var i:int = 1; i<14; i++){
-                imageNames.push("../img/h"+ i + ".png");
-            }
-            imageNames.push("../img/cover.png");
-            println("\n before loading images");
-            
             for(var i:int = 1;i<5;i++){
                 for(var j:int = 6;j<=14;j++){
                     points.push(j+i*100);
                 }
             }
-			
-            
-            loadBitmapDataList();
-			initStack(); 
-            
-            //bitmapLoader();
         }
 
-        public function bitmapLoader( ):void {
-            loader = new Loader( );
-            loader.contentLoaderInfo.addEventListener(Event.COMPLETE,	loadCompleteListener);
-            loader.load(new URLRequest(imageNames[stack.length]));
-            //println("\n bitmap loader");
-            //trace(imageNames[stack.length]);
-            cardState.push(0);
-        }
-        
-        // Triggered when the bitmap has been loaded and initialized
-        private function loadCompleteListener (e:Event):void {
-            println("\n img complete \n stack: " + stack.length);
-            println("\n c: " + loader.content);
-            var s3:Sprite = new Sprite();
-            s3.addChild(loader.content);
-            bitmapDataList.push(loader.content);
-            s3.x = 10 + stack.length * 0;
-            s3.y = 10 + stack.length * 2;
-            addChild(s3);
-            stack.push(s3);
-            s3.addEventListener(MouseEvent.MOUSE_DOWN, onClickHandler);
-            ///println("\n stack: " + stack.length);
-            if(stack.length<imageNames.length){
-                println("\n stack: " + stack.length);
-                bitmapLoader();
-            }else{
-                removeChild(stack.pop());
-                cardState.pop();
-                moveToFirstPlayerHand();
-            }
-        }
-		
 		private function getNextRandom():uint {
 			var value:uint;
 			while(true){
@@ -259,37 +130,25 @@ import Animator;
 		}
 
         private function moveToFirstPlayerHand():void{
-            trace("cardState: " + cardState);
-            trace("points: " + points);
             for(var i:int = 1;i<7;i++){
 				var rnd: uint = getNextRandom();
                 var sprite:Sprite = stack[rnd];
                 cardState[rnd] = 1;
-                //this is the way to hide cards
-                //sprite.addChild(new Bitmap(bitmapDataList[52].bitmapData));
                 firstPlayerHand.push(sprite);
                 var animator:Animator = new Animator(sprite);
                 animator.animateTo(50 + 180*i, -150, animationDuration + i*100);
-                trace("stack size: " + stack.length + " 1: " + firstPlayerHand.length);
             }
-            
-            
-            moveToSecondPlayerHand();
         }
         
         private function moveToSecondPlayerHand():void{
-            trace("cardState: " + cardState);
             for(var i:int = 1;i<7;i++){
 				var rnd: uint = getNextRandom();
                 var sprite:Sprite = stack[rnd];
                 cardState[rnd] = 2;
                 secondPlayerHand.push(sprite);
-                //sprite.addChild(new Bitmap(bitmapDataList[52].bitmapData));
                 var animator:Animator = new Animator(sprite);
                 animator.animateTo(50 + 180*i, 400, animationDuration + i*100);
-                trace("stack size: " + stack.length + " 1: " + secondPlayerHand.length);
             }
-            trace("cardState: " + cardState);
             stage.addEventListener(Event.ENTER_FRAME, enterFrameListener);
         }
         
@@ -310,34 +169,30 @@ import Animator;
         }
         
         private function isAllowed(index: int):Boolean{
-            //trace("table cards: " + countCardsOnTable());
-            //trace("1pts vs 2pts: " + points[index] + " ~ " + points[lastCardIndex]);
             if ((isFirstPlayerMove && cardState[index] == 1) 
                 || (!isFirstPlayerMove && cardState[index] == 2)){
                 if(countCardsOnTable() % 2 == 1){
-                    //trace("!!!need to check points!!!!!");
                     var point:int = points[index] % 100;
                     var kind :int = (points[index] - (points[index]%100) ) /100;
                     var lastPoint:int = points[lastCardIndex] % 100;
                     var lastKind :int = (points[lastCardIndex] - (points[lastCardIndex]%100) ) /100;
-                    //trace("!!! " + point + ":" + kind +  " " + lastPoint + ":" + lastKind);
-                    if((kind==lastKind)&&(point>lastPoint)){
-                        return true;
+                    if((kind==lastKind)){
+						if(point>lastPoint){
+                        	return true;
+						}else{
+							return false;
+						}
                     }else if(kind==mainKind){    
                         return true;
                     }else {
-                        trace("!!!kind is different!!!!!");
                         return false;
                     }
                 }else if((countCardsOnTable() % 2 == 0)&&(countCardsOnTable()>1)){
-                    //trace("search for similar cards..." + point);
                     var point:int = points[index] % 100;
                     var flag:Boolean = false;
                     for(var i:int =0;i<cardState.length;i++){
                         if(cardState[i]==3){
-                            //trace("p:" + points[i]);
                             if(point==getValue(i)){
-                                //trace("!!!flag is true : " + i + " ~ " + index);
                                 flag=true;
                             }
                         }
@@ -352,15 +207,11 @@ import Animator;
         
         private function onClickHandler(e: MouseEvent):void{
             var cardIndex:int = stack.indexOf(e.currentTarget as Sprite);
-            trace("click on  x: " + e.currentTarget.x + " y: " + e.currentTarget.y + " target : " + imageNames[cardIndex] + " : " + cardIndex);
-            trace("pts: " + points[cardIndex]  + " lastCard pts: " + points[lastCardIndex]);
             if(isAllowed(cardIndex)){
                 moveToCenter(e.currentTarget as Sprite, 20 * countCardsOnTable() + 200 * (Math.floor(countCardsOnTable()/2)));
                 cardState[cardIndex] = 3;
                 lastCardIndex = cardIndex;
                 lastCardPoints = points[cardIndex];
-                trace(isFirstPlayerMove + " :card state: " + cardState );
-                trace("cards on table: " + countCardsOnTable());
                 rearrangeCardsOnHands();
                 isFirstPlayerMove = !isFirstPlayerMove;
             }
@@ -393,93 +244,79 @@ import Animator;
         }
         
         private function handleNextMove(e:MouseEvent):void{
-            trace("handle next move:  " + isFirstPlayerMove);
-            if(countCardsOnTable()%2==0){
-                trace("clean up table");
-                cleanUpTable();
-            }else{
-                trace("cards # " + countCardsOnTable());
-                if(isFirstPlayerMove){
-                    for(var i:int=0;i<cardState.length;i++){
-                        if(cardState[i]==3){
-                            cardState[i]=1;
-                            moveToPlayer1Hand(stack[i], 6);
-                        }
-                    }
-                }else{
-                    for(var i:int=0;i<cardState.length;i++){
-                        if(cardState[i]==3){
-                            cardState[i]=2;
-                            moveToPlayer2Hand(stack[i], 6);
-                        }
-                    }
-                }
-                //isFirstPlayerMove = !isFirstPlayerMove;
-            }
+            cleanUpTable();
             rearrangeCardsOnHands();
-            
-            //TODO: need to check stack.length 
-            var p1cards:uint = countCardsOnHand(1);
-            trace("p1cards:  " + p1cards);
-            for(var i:int=p1cards;i<6;i++){
-                var index:int = getNextRandom();
-                //trace("last 0 index: " + index);
-                if(index!=-1){
-                    cardState[index] = 1;
-                    moveToPlayer1Hand(stack[index], i+1);
-                }
-            }
-            var p2cards:uint = countCardsOnHand(2);
-            trace("p2cards: "  + p2cards);
-            for(var i:int=p2cards;i<6;i++){
-                var index:int = getNextRandom();
-                //trace("last 0 index: " + index);
-                if(index!=-1){
-                    cardState[index] = 2;
-                    moveToPlayer2Hand(stack[index], i+1);
-                }
-            }
+            refillHand1();
+			refillHand2();
             isFirstPlayerMove = !isFirstPlayerMove;
-            
         }
+		
+		private function refillHand1():void{
+			var p1cards:uint = countCardsOnHand(1);
+			for(var i:int=p1cards;i<6;i++){
+				var index:int = getNextRandom();
+				if(index!=-1){
+					cardState[index] = 1;
+					moveToPlayer1Hand(stack[index], i+1);
+				}
+			}
+		}
+		
+		private function refillHand2():void{
+			var p2cards:uint = countCardsOnHand(2);
+			for(var i:int=p2cards;i<6;i++){
+				var index:int = getNextRandom();
+				if(index!=-1){
+					cardState[index] = 2;
+					moveToPlayer2Hand(stack[index], i+1);
+				}
+			}
+		}
         
         private function cleanUpTable():void{
-            for(var i:int=0;i<cardState.length;i++){
-                if(cardState[i]==3){
-                    cardState[i]=4;
-                    moveOut(stack[i], 0);
-                }
-            }
+			if(countCardsOnTable()%2==0){
+				for(var i:int=0;i<cardState.length;i++){
+					if(cardState[i]==3){
+						cardState[i]=4;
+						moveOut(stack[i], 0);
+					}
+				}
+			}else{
+				if(isFirstPlayerMove){
+					for(var i:int=0;i<cardState.length;i++){
+						if(cardState[i]==3){
+							cardState[i]=1;
+							moveToPlayer1Hand(stack[i], 6);
+						}
+					}
+				}else{
+					for(var i:int=0;i<cardState.length;i++){
+						if(cardState[i]==3){
+							cardState[i]=2;
+							moveToPlayer2Hand(stack[i], 6);
+						}
+					}
+				}
+			}
         }
-        
         // Handles Event.ENTER_FRAME events. 
         private function enterFrameListener (e:Event):void {
-            //trace("onEnterFrame: " + timerCounter++ + " : " + getTimer());
-            //for(var i:int=0;i<cardState.length;i++){
-                //check something
-            //}
         }
         
         private function rearrangeCardsOnHands():void{
-            var tableCardsCounter = 0;
-            var player1CardsCounter = 0;
-            var player2CardsCounter = 0;
+            var tableCardsCounter:int = 0;
+            var player1CardsCounter:int = 0;
+            var player2CardsCounter:int = 0;
             for(var i:int=cardState.length-1;i>=0;i--){
                 if(cardState[i]==3){
                     tableCardsCounter++;
-                    //trace("card " + i + " on table");
-                    //moveOut(stack[i]);
                 }
                 if(cardState[i]==1){
                     player1CardsCounter++;
-                    //trace("1: " + i);
                     moveToPlayer1Hand(stack[i], player1CardsCounter);
-                    //trace("card: " + i + " z-index: " +  getChildIndex(stack[i]));
-                    //setChildIndex(stack[i], player1CardsCounter);
                 }
                 if(cardState[i]==2){
                     player2CardsCounter++;
-                    //trace("2: " + i);
                     moveToPlayer2Hand(stack[i], player2CardsCounter);
                 }
                 
@@ -546,6 +383,75 @@ import Animator;
         private function println(s: String):void{
             textLog.text = textLog.text + s;
         }
+		
+		private function loadBitmapDataList():void{
+			
+			
+			
+			//            bitmapDataList.push(new Bitmap((new Bitmaps2 as Bitmap).bitmapData));
+			//            bitmapDataList.push(new Bitmap((new Bitmaps3 as Bitmap).bitmapData));
+			//            bitmapDataList.push(new Bitmap((new Bitmaps4 as Bitmap).bitmapData));
+			//            bitmapDataList.push(new Bitmap((new Bitmaps5 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaps6 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaps7 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaps8 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaps9 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaps10 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaps11 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaps12 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaps13 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaps1 as Bitmap).bitmapData));
+			
+			
+			//            bitmapDataList.push(new Bitmap((new Bitmaph2 as Bitmap).bitmapData));
+			//            bitmapDataList.push(new Bitmap((new Bitmaph3 as Bitmap).bitmapData));
+			//            bitmapDataList.push(new Bitmap((new Bitmaph4 as Bitmap).bitmapData));
+			//            bitmapDataList.push(new Bitmap((new Bitmaph5 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaph6 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaph7 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaph8 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaph9 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaph10 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaph11 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaph12 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaph13 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmaph1 as Bitmap).bitmapData));
+			
+			
+			
+			//            bitmapDataList.push(new Bitmap((new Bitmapc2 as Bitmap).bitmapData));
+			//            bitmapDataList.push(new Bitmap((new Bitmapc3 as Bitmap).bitmapData));
+			//            bitmapDataList.push(new Bitmap((new Bitmapc4 as Bitmap).bitmapData));
+			//            bitmapDataList.push(new Bitmap((new Bitmapc5 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapc6 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapc7 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapc8 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapc9 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapc10 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapc11 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapc12 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapc13 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapc1 as Bitmap).bitmapData));
+			
+			
+			
+			//            bitmapDataList.push(new Bitmap((new Bitmapd2 as Bitmap).bitmapData));
+			//            bitmapDataList.push(new Bitmap((new Bitmapd3 as Bitmap).bitmapData));
+			//            bitmapDataList.push(new Bitmap((new Bitmapd4 as Bitmap).bitmapData));
+			//            bitmapDataList.push(new Bitmap((new Bitmapd5 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapd6 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapd7 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapd8 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapd9 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapd10 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapd11 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapd12 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapd13 as Bitmap).bitmapData));
+			bitmapDataList.push(new Bitmap((new Bitmapd1 as Bitmap).bitmapData));
+			
+			
+			
+		}
         
         //background image
         [Embed(source="../img/welcomeScreen.png")]
