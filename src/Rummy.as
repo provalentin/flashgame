@@ -28,11 +28,11 @@ import Animator;
         public var imageNames:Vector.<String>;
         public var points:Vector.<int> = new Vector.<int>;
         
-        public var stack:Vector.<Sprite>;
-        public var firstPlayerHand:Vector.<Sprite>;
-        public var secondPlayerHand:Vector.<Sprite>;
-        public var cardState:Vector.<uint>;
-        public var bitmapDataList:Vector.<Bitmap>;
+        public var stack:Vector.<Sprite> = new Vector.<Sprite>;
+        public var firstPlayerHand:Vector.<Sprite> = new Vector.<Sprite>;
+        public var secondPlayerHand:Vector.<Sprite> = new Vector.<Sprite>;
+        public var cardState:Vector.<uint> = new Vector.<uint>;
+        public var bitmapDataList:Vector.<Bitmap> = new Vector.<Bitmap>;
 
         public var bitmapData:BitmapData;
 
@@ -55,20 +55,14 @@ import Animator;
             //stage.scaleMode = StageScaleMode.NO_SCALE;
             stage.align = StageAlign.LEFT;
             stage.quality = StageQuality.BEST;
-
-            //background
-            //bitmapData = (new WelcomeScreen() as Bitmap).bitmapData;
-            //bitmapData = new BitmapData(1000, 600, false, 0x707070);
-            //addChild(new Bitmap(bitmapData));
-            
-            createTestCards();
             
             loadCardsToStack();
 			loadBitmapDataList();
 			initStack(); 
-            moveToFirstPlayerHand();
-			moveToSecondPlayerHand();
+			refillHand(1);
+			refillHand(2);
             createNextMoveButton();
+			stage.addEventListener(Event.ENTER_FRAME, enterFrameListener);
         }
         
 		private function initStack():void{
@@ -103,11 +97,6 @@ import Animator;
         }
         
         private function loadCardsToStack():void{
-            stack =             new Vector.<Sprite>;
-            firstPlayerHand =   new Vector.<Sprite>;
-            secondPlayerHand =  new Vector.<Sprite>;
-            cardState =         new Vector.<uint>;
-            bitmapDataList =        new Vector.<Bitmap>;
             for(var i:int = 1;i<5;i++){
                 for(var j:int = 6;j<=14;j++){
                     points.push(j+i*100);
@@ -126,32 +115,12 @@ import Animator;
 				}
 			}
 			return value;
-			
 		}
 
-        private function moveToFirstPlayerHand():void{
-            for(var i:int = 1;i<7;i++){
-				var rnd: uint = getNextRandom();
-                var sprite:Sprite = stack[rnd];
-                cardState[rnd] = 1;
-                firstPlayerHand.push(sprite);
-                var animator:Animator = new Animator(sprite);
-                animator.animateTo(50 + 180*i, -150, animationDuration + i*100);
-            }
-        }
-        
-        private function moveToSecondPlayerHand():void{
-            for(var i:int = 1;i<7;i++){
-				var rnd: uint = getNextRandom();
-                var sprite:Sprite = stack[rnd];
-                cardState[rnd] = 2;
-                secondPlayerHand.push(sprite);
-                var animator:Animator = new Animator(sprite);
-                animator.animateTo(50 + 180*i, 400, animationDuration + i*100);
-            }
-            stage.addEventListener(Event.ENTER_FRAME, enterFrameListener);
-        }
-        
+		private function moveToPlayerHand(sprite: Sprite, shift: int, hand: int):void{
+			new Animator(sprite).animateTo(50 + 180 * shift,  hand==1?-150:400, animationDuration );
+		}
+		
         private function moveToPlayer1Hand(sprite: Sprite, shift: int):void{
             new Animator(sprite).animateTo(50 + 180 * shift,  -150, animationDuration );
         }
@@ -160,6 +129,14 @@ import Animator;
             new Animator(sprite).animateTo(50 + 180 * shift, 400, animationDuration );
         }
         
+		private function moveToCenter(sprite: Sprite, shift: int):void{
+			new Animator(sprite).animateTo(300 + shift, 150, animationDuration);
+		}
+		
+		private function moveOut(sprite: Sprite, shift: int):void{
+			new Animator(sprite).animateTo(1200, 10 + shift, animationDuration);
+		}
+		
         private function getKind(index:int):int{
             return (points[index] - (points[index]%100) ) /100;
         }
@@ -204,12 +181,7 @@ import Animator;
         }
         
         private function countCardsOnTable():uint {
-            var counter:uint = 0;
-            for(var i:int=0;i<cardState.length;i++){
-                if(cardState[i]==3)
-                    counter++;
-            }
-            return counter;
+            return countCardsOnHand(3);
         }
         
         private function countCardsOnHand(player: uint):uint{
@@ -221,44 +193,25 @@ import Animator;
             return counter;
         }
         
-        private function moveToCenter(sprite: Sprite, shift: int):void{
-            new Animator(sprite).animateTo(300 + shift, 150, animationDuration);
-        }
-        
-        private function moveOut(sprite: Sprite, shift: int):void{
-            new Animator(sprite).animateTo(1200, 10 + shift, animationDuration);
-        }
-        
         private function handleNextMove(e:MouseEvent):void{
             cleanUpTable();
             rearrangeCardsOnHands();
-            refillHand1();
-			refillHand2();
+            refillHand(1);
+			refillHand(2);
             isFirstPlayerMove = !isFirstPlayerMove;
         }
 		
-		private function refillHand1():void{
-			var p1cards:uint = countCardsOnHand(1);
-			for(var i:int=p1cards;i<6;i++){
+		private function refillHand(hand: int):void{
+			var cards:uint = countCardsOnHand(hand);
+			for(var i:int=cards;i<6;i++){
 				var index:int = getNextRandom();
 				if(index!=-1){
-					cardState[index] = 1;
-					moveToPlayer1Hand(stack[index], i+1);
+					cardState[index] = hand;
+					moveToPlayerHand(stack[index], i+1, hand);
 				}
 			}
 		}
 		
-		private function refillHand2():void{
-			var p2cards:uint = countCardsOnHand(2);
-			for(var i:int=p2cards;i<6;i++){
-				var index:int = getNextRandom();
-				if(index!=-1){
-					cardState[index] = 2;
-					moveToPlayer2Hand(stack[index], i+1);
-				}
-			}
-		}
-        
         private function cleanUpTable():void{
 			if(countCardsOnTable()%2==0){
 				for(var i:int=0;i<cardState.length;i++){
@@ -268,25 +221,13 @@ import Animator;
 					}
 				}
 			}else{
-				if(isFirstPlayerMove){
-					for(var i:int=0;i<cardState.length;i++){
-						if(cardState[i]==3){
-							cardState[i]=1;
-							moveToPlayer1Hand(stack[i], 6);
-						}
-					}
-				}else{
-					for(var i:int=0;i<cardState.length;i++){
-						if(cardState[i]==3){
-							cardState[i]=2;
-							moveToPlayer2Hand(stack[i], 6);
-						}
+				for(var i:int=0;i<cardState.length;i++){
+					if(cardState[i]==3){
+						cardState[i]=isFirstPlayerMove?1:2;
+						moveToPlayer1Hand(stack[i], 6);
 					}
 				}
 			}
-        }
-        // Handles Event.ENTER_FRAME events. 
-        private function enterFrameListener (e:Event):void {
         }
         
         private function rearrangeCardsOnHands():void{
@@ -311,6 +252,9 @@ import Animator;
         
         //OLD CODE
         //Will be removed later
+		// Handles Event.ENTER_FRAME events. 
+		private function enterFrameListener (e:Event):void {
+		}
         private function mouseDownListener (e:MouseEvent):void {
             var mousePt:Point = globalToLocal(new Point(e.stageX, e.stageY));
             animator.animateTo(mousePt.x, mousePt.y, 500);
@@ -332,7 +276,12 @@ import Animator;
         }
         
         private function createTestCards():void{
-            //first card 
+			//background
+			//bitmapData = (new WelcomeScreen() as Bitmap).bitmapData;
+			//bitmapData = new BitmapData(1000, 600, false, 0x707070);
+			//addChild(new Bitmap(bitmapData));
+			
+			//first card 
             s1 = new Sprite();
             //s1.addChild(new Bitmap((new s1Bitmap as Bitmap).bitmapData));
             s1.addChild(new Bitmap(new BitmapData(150, 90, false, 0x7f7f00)));
