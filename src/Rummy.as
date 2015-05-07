@@ -171,35 +171,21 @@ import Animator;
         private function isAllowed(index: int):Boolean{
             if ((isFirstPlayerMove && cardState[index] == 1) 
                 || (!isFirstPlayerMove && cardState[index] == 2)){
+				if(countCardsOnTable()==0) return true;
                 if(countCardsOnTable() % 2 == 1){
-                    var point:int = points[index] % 100;
-                    var kind :int = (points[index] - (points[index]%100) ) /100;
-                    var lastPoint:int = points[lastCardIndex] % 100;
-                    var lastKind :int = (points[lastCardIndex] - (points[lastCardIndex]%100) ) /100;
-                    if((kind==lastKind)){
-						if(point>lastPoint){
-                        	return true;
-						}else{
-							return false;
-						}
-                    }else if(kind==mainKind){    
-                        return true;
-                    }else {
-                        return false;
+                    if((getKind(index)==getKind(lastCardIndex))){
+						return (getValue(index)>getValue(lastCardIndex))
                     }
-                }else if((countCardsOnTable() % 2 == 0)&&(countCardsOnTable()>1)){
-                    var point:int = points[index] % 100;
-                    var flag:Boolean = false;
-                    for(var i:int =0;i<cardState.length;i++){
-                        if(cardState[i]==3){
-                            if(point==getValue(i)){
-                                flag=true;
-                            }
-                        }
-                    }
-                    return flag;
+					return (getKind(index)==mainKind)  
                 }else{
-                    return true;
+	                for(var i:int =0;i<cardState.length;i++){
+	                    if(cardState[i]==3){
+	                        if(getValue(index)==getValue(i)){
+	                            return true;
+	                        }
+	                    }
+	                }
+	                return false;
                 }
             }
             return false;
