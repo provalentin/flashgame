@@ -35,6 +35,7 @@ import Animator;
         public var bitmapDataList:Vector.<Bitmap> = new Vector.<Bitmap>;
 
         public var bitmapData:BitmapData;
+		public var bitmapCover:Bitmap;
 
         public var spritesheet:BitmapData;
 
@@ -56,6 +57,7 @@ import Animator;
             stage.align = StageAlign.LEFT;
             stage.quality = StageQuality.BEST;
             //trace("loadCardsToStack");
+			bitmapCover = new Bitmap((new coverBitmap as Bitmap).bitmapData);
             loadCardsToStack();
 			loadBitmapDataList();
 			initStack(); 
@@ -74,6 +76,7 @@ import Animator;
 				s1.addEventListener(MouseEvent.MOUSE_DOWN, onClickHandler);
 				addChild(s1);
 				stack.push(s1);
+				s1.addChild(new Bitmap((new coverBitmap as Bitmap).bitmapData));
 				cardState.push(0);
 			}
 			
@@ -208,6 +211,7 @@ import Animator;
 				if(index!=-1){
 					cardState[index] = hand; 
 					moveToPlayerHand(stack[index], i+1, hand);
+					showCard(index);
 				}
 			}
 			rearrangeCardsOnHands();
@@ -219,13 +223,18 @@ import Animator;
 					if(cardState[i]==3){
 						cardState[i]=4;
 						moveOut(stack[i], 0);
+						hideCard(i);
 					}
 				}
 			}else{
 				for(var i:int=0;i<cardState.length;i++){
 					if(cardState[i]==3){
 						cardState[i]=isFirstPlayerMove?1:2;
-						moveToPlayer1Hand(stack[i], 6);
+						//if(isFirstPlayerMove) {
+							moveToPlayer1Hand(stack[i], 6);
+						//}else{
+							
+						//}
 					}
 				}
 			}
@@ -250,6 +259,14 @@ import Animator;
                 
             }
         }
+		
+		private function hideCard(cardIndex:int):void{
+			stack[cardIndex].addChild(new Bitmap((new coverBitmap as Bitmap).bitmapData));
+		}
+		
+		private function showCard(cardIndex:int):void{
+			stack[cardIndex].removeChildAt(stack[cardIndex].numChildren-1);
+		}
         
         //OLD CODE
         //Will be removed later
@@ -504,6 +521,10 @@ import Animator;
         public var Bitmapd12: Class;
         [Embed(source="../img/d13.png")]
         public var Bitmapd13: Class;
+		
+		[Embed(source="../img/cover.png")]
+		public var coverBitmap: Class;
+		
         
         //card images
         [Embed(source="../img/s1.png")]
