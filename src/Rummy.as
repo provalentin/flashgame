@@ -29,8 +29,8 @@ import Animator;
         public var points:Vector.<int> = new Vector.<int>;
         
         public var stack:Vector.<Sprite> = new Vector.<Sprite>;
-        public var firstPlayerHand:Vector.<Sprite> = new Vector.<Sprite>;
-        public var secondPlayerHand:Vector.<Sprite> = new Vector.<Sprite>;
+        public var firstPlayerHand:Vector.<int> = new Vector.<int>;
+        public var secondPlayerHand:Vector.<int> = new Vector.<int>;
         public var cardState:Vector.<uint> = new Vector.<uint>;
         public var bitmapDataList:Vector.<Bitmap> = new Vector.<Bitmap>;
 
@@ -55,7 +55,7 @@ import Animator;
             //stage.scaleMode = StageScaleMode.NO_SCALE;
             stage.align = StageAlign.LEFT;
             stage.quality = StageQuality.BEST;
-            
+            //trace("loadCardsToStack");
             loadCardsToStack();
 			loadBitmapDataList();
 			initStack(); 
@@ -206,10 +206,11 @@ import Animator;
 			for(var i:int=cards;i<6;i++){
 				var index:int = getNextRandom();
 				if(index!=-1){
-					cardState[index] = hand;
+					cardState[index] = hand; 
 					moveToPlayerHand(stack[index], i+1, hand);
 				}
 			}
+			rearrangeCardsOnHands();
 		}
 		
         private function cleanUpTable():void{
