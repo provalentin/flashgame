@@ -82,6 +82,7 @@ import Animator;
 			
 			mainKindIndex = Math.floor(Math.random() * 36);
 			mainKind = getKind(mainKindIndex);
+			showCard(mainKindIndex);
 			//stack[mainKindIndex].rotation = 90;
 			stack[mainKindIndex].x = 100;
 			stack[mainKindIndex].y = 150;
@@ -265,7 +266,7 @@ import Animator;
 		}
 		
 		private function showCard(cardIndex:int):void{
-			stack[cardIndex].removeChildAt(stack[cardIndex].numChildren-1);
+			stack[cardIndex].addChild(bitmapDataList[cardIndex]);
 		}
         
         //OLD CODE
