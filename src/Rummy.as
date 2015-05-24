@@ -14,7 +14,7 @@ import flash.text.TextField;
 
 import Animator;
 
-    [SWF(width=1500, height=800, frameRate=30, backgroundColor=0xE2E2E2)]
+    [SWF(width=1800, height=800, frameRate=30, backgroundColor=0xE2E2E2)]
     public class Rummy extends Sprite{
         
         public var s1:Sprite;
@@ -138,7 +138,7 @@ import Animator;
 		}
 		
 		private function moveOut(sprite: Sprite, shift: int):void{
-			new Animator(sprite).animateTo(1200, 10 + shift, animationDuration);
+			new Animator(sprite).animateTo(1700, 10 + shift, animationDuration);
 		}
 		
         private function getKind(index:int):int{
@@ -175,14 +175,22 @@ import Animator;
         private function onClickHandler(e: MouseEvent):void{
             var cardIndex:int = stack.indexOf(e.currentTarget as Sprite);
             if(isAllowed(cardIndex)){
-                moveToCenter(e.currentTarget as Sprite, 20 * countCardsOnTable() + 200 * (Math.floor(countCardsOnTable()/2)));
-                cardState[cardIndex] = 3;
-                lastCardIndex = cardIndex;
-                lastCardPoints = points[cardIndex];
-                rearrangeCardsOnHands();
-                isFirstPlayerMove = !isFirstPlayerMove;
+               moveCard(cardIndex); 
             }
+			if(isFirstPlayerMove) {
+				var cardIndex:int = computerMove();
+				if(isAllowed(cardIndex) ) moveCard(cardIndex)
+			}
         }
+		
+		private function moveCard(cardIndex: int):void{
+			moveToCenter(stack[cardIndex], 20 * countCardsOnTable() + 200 * (Math.floor(countCardsOnTable()/2)));
+			cardState[cardIndex] = 3;
+			lastCardIndex = cardIndex;
+			lastCardPoints = points[cardIndex];
+			rearrangeCardsOnHands();
+			isFirstPlayerMove = !isFirstPlayerMove;
+		}
         
         private function countCardsOnTable():uint {
             return countCardsOnHand(3);
@@ -203,7 +211,24 @@ import Animator;
             refillHand(1);
 			refillHand(2);
             isFirstPlayerMove = !isFirstPlayerMove;
+			if(isFirstPlayerMove) {
+				var cardIndex:int = computerMove();
+				if(isAllowed(cardIndex) ) moveCard(cardIndex)
+			}
         }
+		
+		private function computerMove():int {
+			var value:uint;
+			for(var i:int=0;i<100;i++){
+				value = Math.floor(Math.random() * 36);
+				if(cardState[value]==1){
+					if(isAllowed(value)) break;
+				}else{	
+					
+				}
+			}
+			return value;
+		}
 		
 		private function refillHand(hand: int):void{
 			var cards:uint = countCardsOnHand(hand);
