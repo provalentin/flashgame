@@ -11,10 +11,11 @@ import flash.events.MouseEvent;
 import flash.geom.Point;
 import flash.net.URLRequest;
 import flash.text.TextField;
+import flash.text.TextFormat;
 
 import Animator;
 
-    [SWF(width=1800, height=800, frameRate=30, backgroundColor=0xE2E2E2)]
+    [SWF(width=2200, height=800, frameRate=30, backgroundColor=0xE2E2E2)]
     public class Rummy extends Sprite{
         
         public var s1:Sprite;
@@ -33,6 +34,8 @@ import Animator;
         public var secondPlayerHand:Vector.<int> = new Vector.<int>;
         public var cardState:Vector.<uint> = new Vector.<uint>;
         public var bitmapDataList:Vector.<Bitmap> = new Vector.<Bitmap>;
+		
+		public var winnerText:TextField = new TextField();
 
         public var bitmapData:BitmapData;
 		public var bitmapCover:Bitmap;
@@ -58,6 +61,7 @@ import Animator;
             stage.quality = StageQuality.BEST;
             //trace("loadCardsToStack");
 			bitmapCover = new Bitmap((new coverBitmap as Bitmap).bitmapData);
+			createWinnerLabel();
             loadCardsToStack();
 			loadBitmapDataList();
 			initStack(); 
@@ -90,15 +94,34 @@ import Animator;
         
         private function createNextMoveButton():void{
             var button:Sprite = new Sprite();
-            button.addChild(new Bitmap(new BitmapData(150, 90, false, 0x9f9f00)));
+            button.addChild(new Bitmap(new BitmapData(150, 90, false, 0xFFFFFF)));
             button.x = 1200;
             button.y = 300;
             var text:TextField = new TextField();
-            text.text = "next move";
+            text.text = "next move ";
+			text.width = 200;
+			text.setTextFormat(new TextFormat("Verdana",35, 0x000000));
             button.addChild(text);
             addChild(button);
             button.addEventListener(MouseEvent.MOUSE_DOWN, handleNextMove);
+			
+			
         }
+		
+		private function createWinnerLabel():void{
+			var button2:Sprite = new Sprite();
+			button2.addChild(new Bitmap(new BitmapData(350, 90, false, 0xFFFFFF)));
+			button2.x = 1200;
+			button2.y = 250;
+			
+			winnerText.text = "  ";
+			winnerText.width = 300;
+			
+			winnerText.setTextFormat(new TextFormat("Verdana", 35, 0xFF0000));
+			button2.addChild(winnerText);
+			addChild(button2);
+			
+		}
         
         private function loadCardsToStack():void{
             for(var i:int = 1;i<5;i++){
@@ -107,10 +130,22 @@ import Animator;
                 }
             }
         }
+		
+		private function isEndGame():int{
+			var p0:int = countCardsOnHand(0);
+			var p1:int = countCardsOnHand(1);
+			var p2:int = countCardsOnHand(2);
+			if(p0==0) {
+				if((p1==0)&&(p2==0)) return 0;
+				if(p1==0) return 1;
+				if(p2==0) return 2;
+			}
+			return -1;
+		}
 
-		private function getNextRandom():uint {
-			var value:uint;
-			while(true){
+		private function getNextRandom():int {
+			var value:int = -1;
+			for(var i:int=0;i<100;i++){
 				value = Math.floor(Math.random() * 36);
 				if(mainKindIndex==value){
 					if(countCardsOnHand(0)==1) break;
@@ -173,7 +208,8 @@ import Animator;
         }
         
         private function onClickHandler(e: MouseEvent):void{
-            var cardIndex:int = stack.indexOf(e.currentTarget as Sprite);
+            
+			var cardIndex:int = stack.indexOf(e.currentTarget as Sprite);
             if(isAllowed(cardIndex)){
                moveCard(cardIndex); 
             }
@@ -206,14 +242,19 @@ import Animator;
         }
         
         private function handleNextMove(e:MouseEvent):void{
-            cleanUpTable();
-            rearrangeCardsOnHands();
-            refillHand(1);
-			refillHand(2);
-            isFirstPlayerMove = !isFirstPlayerMove;
-			if(isFirstPlayerMove) {
-				var cardIndex:int = computerMove();
-				if(isAllowed(cardIndex) ) moveCard(cardIndex)
+            if(isEndGame()>=0) {
+				winnerText.appendText("Winner is " + isEndGame());
+			}else{
+				
+				cleanUpTable();
+	            rearrangeCardsOnHands();
+	            refillHand(1);
+				refillHand(2);
+	            isFirstPlayerMove = !isFirstPlayerMove;
+				if(isFirstPlayerMove) {
+					var cardIndex:int = computerMove();
+					if(isAllowed(cardIndex) ) moveCard(cardIndex)
+				}
 			}
         }
 		
@@ -234,7 +275,7 @@ import Animator;
 			var cards:uint = countCardsOnHand(hand);
 			for(var i:int=cards;i<6;i++){
 				var index:int = getNextRandom();
-				if(index!=-1){
+				if(countCardsOnHand(0)>0){
 					cardState[index] = hand; 
 					moveToPlayerHand(stack[index], i+1, hand);
 					showCard(index);
