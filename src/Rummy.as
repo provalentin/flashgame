@@ -1,15 +1,11 @@
 package{
 import flash.display.Bitmap;
 import flash.display.BitmapData;
-import flash.display.Loader;
 import flash.display.Sprite;
 import flash.display.StageAlign;
 import flash.display.StageQuality;
-import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.events.MouseEvent;
-import flash.geom.Point;
-import flash.net.URLRequest;
 import flash.text.TextField;
 import flash.text.TextFormat;
 
@@ -43,7 +39,7 @@ import Animator;
         public var spritesheet:BitmapData;
 
         public var animator:Animator;
-        public var animationDuration = 500;
+        public var animationDuration:int = 500;
         
         public var isFirstPlayerMove: Boolean = false;
         public var lastCardPoints:int;
@@ -52,14 +48,11 @@ import Animator;
 		public var mainKindIndex:int = 0;
         
         public var textLog:TextField = new TextField();
-		private var loader:Loader; // The bitmap loader
 		private var moveInProgress:Boolean;
 
         public function Rummy(){
-            //stage.scaleMode = StageScaleMode.NO_SCALE;
             stage.align = StageAlign.LEFT;
             stage.quality = StageQuality.BEST;
-            //trace("loadCardsToStack");
 			bitmapCover = new Bitmap((new coverBitmap as Bitmap).bitmapData);
 			createWinnerLabel();
             loadCardsToStack();
@@ -68,7 +61,6 @@ import Animator;
 			refillHand(1);
 			refillHand(2);
             createNextMoveButton();
-			stage.addEventListener(Event.ENTER_FRAME, enterFrameListener);
         }
         
 		private function initStack():void{
@@ -83,11 +75,9 @@ import Animator;
 				s1.addChild(new Bitmap((new coverBitmap as Bitmap).bitmapData));
 				cardState.push(0);
 			}
-			
 			mainKindIndex = Math.floor(Math.random() * 36);
 			mainKind = getKind(mainKindIndex);
 			showCard(mainKindIndex);
-			//stack[mainKindIndex].rotation = 90;
 			stack[mainKindIndex].x = 100;
 			stack[mainKindIndex].y = 150;
 		}
@@ -104,8 +94,6 @@ import Animator;
             button.addChild(text);
             addChild(button);
             button.addEventListener(MouseEvent.MOUSE_DOWN, handleNextMove);
-			
-			
         }
 		
 		private function createWinnerLabel():void{
@@ -113,14 +101,11 @@ import Animator;
 			button2.addChild(new Bitmap(new BitmapData(350, 90, false, 0xFFFFFF)));
 			button2.x = 1200;
 			button2.y = 250;
-			
 			winnerText.text = "  ";
 			winnerText.width = 300;
-			
 			winnerText.setTextFormat(new TextFormat("Verdana", 35, 0xFF0000));
 			button2.addChild(winnerText);
 			addChild(button2);
-			
 		}
         
         private function loadCardsToStack():void{
@@ -208,7 +193,6 @@ import Animator;
         }
         
         private function onClickHandler(e: MouseEvent):void{
-            
 			var cardIndex:int = stack.indexOf(e.currentTarget as Sprite);
             if(isAllowed(cardIndex)){
                moveCard(cardIndex); 
@@ -235,8 +219,7 @@ import Animator;
         private function countCardsOnHand(player: uint):uint{
             var counter:uint = 0;
             for(var i:int=0;i<cardState.length;i++){
-                if(cardState[i]==player)
-                    counter++;
+                if(cardState[i]==player) counter++;
             }
             return counter;
         }
@@ -245,7 +228,6 @@ import Animator;
             if(isEndGame()>=0) {
 				winnerText.appendText("Winner is " + isEndGame());
 			}else{
-				
 				cleanUpTable();
 	            rearrangeCardsOnHands();
 	            refillHand(1);
@@ -264,8 +246,6 @@ import Animator;
 				value = Math.floor(Math.random() * 36);
 				if(cardState[value]==1){
 					if(isAllowed(value)) break;
-				}else{	
-					
 				}
 			}
 			return value;
@@ -297,11 +277,7 @@ import Animator;
 				for(var i:int=0;i<cardState.length;i++){
 					if(cardState[i]==3){
 						cardState[i]=isFirstPlayerMove?1:2;
-						//if(isFirstPlayerMove) {
 							moveToPlayer1Hand(stack[i], 6);
-						//}else{
-							
-						//}
 					}
 				}
 			}
@@ -335,75 +311,6 @@ import Animator;
 			stack[cardIndex].addChild(bitmapDataList[cardIndex]);
 		}
         
-        //OLD CODE
-        //Will be removed later
-		// Handles Event.ENTER_FRAME events. 
-		private function enterFrameListener (e:Event):void {
-		}
-        private function mouseDownListener (e:MouseEvent):void {
-            var mousePt:Point = globalToLocal(new Point(e.stageX, e.stageY));
-            animator.animateTo(mousePt.x, mousePt.y, 500);
-        }
-        
-        private function moveToCenter2(e:MouseEvent):void{
-            trace(e.currentTarget + " move to center");
-            var mousePt:Point = globalToLocal(new Point(e.stageX, e.stageY));
-            var animator2:Animator = new Animator(s2);
-            animator2.animateTo(500, 250, 500);
-        }
-        
-        private function generalMoveToCenter(e:MouseEvent):void{
-            trace("generalMoveToCenter1: x:" + (e.currentTarget as Sprite).x);
-            var mousePt:Point = globalToLocal(new Point(e.stageX, e.stageY));
-            var animator2:Animator = new Animator(e.currentTarget as Sprite);
-            animator2.animateTo(700, 150, 500);
-            trace("generalMoveToCenter2: x:" + (e.currentTarget as Sprite).x);
-        }
-        
-        private function createTestCards():void{
-			//background
-			//bitmapData = (new WelcomeScreen() as Bitmap).bitmapData;
-			//bitmapData = new BitmapData(1000, 600, false, 0x707070);
-			//addChild(new Bitmap(bitmapData));
-			
-			//first card 
-            s1 = new Sprite();
-            //s1.addChild(new Bitmap((new s1Bitmap as Bitmap).bitmapData));
-            s1.addChild(new Bitmap(new BitmapData(150, 90, false, 0x7f7f00)));
-            s1.x = 800;
-            s1.y = 400;
-            var text:TextField = new TextField();
-            text.text = "old code";
-            s1.addChild(text);
-            //addChild(s1);
-            s1.addEventListener(MouseEvent.MOUSE_DOWN, generalMoveToCenter);
-            
-            //animator = new Animator(s1);
-            
-            //second card 
-            s2 = new Sprite();
-            //s1.addChild(new Bitmap((new s1Bitmap as Bitmap).bitmapData));
-            s2.addChild(new Bitmap(new BitmapData(50, 90, false, 0x808080)));
-            s2.x = 50;
-            s2.y = 150;
-            var text2:TextField = new TextField();
-            text2.text = "s2";
-            s2.addChild(text2);
-            addChild(s2);
-            s2.addEventListener(MouseEvent.MOUSE_DOWN, moveToCenter2);
-            trace("start loading images");
-            
-            textLog.text = "initial log";
-            textLog.x = 800;
-            textLog.y = 800;
-            addChild(textLog);
-            
-        }
-        
-        private function println(s: String):void{
-            textLog.text = textLog.text + s;
-        }
-		
 		private function loadBitmapDataList():void{
 			
 			
@@ -468,16 +375,13 @@ import Animator;
 			bitmapDataList.push(new Bitmap((new Bitmapd12 as Bitmap).bitmapData));
 			bitmapDataList.push(new Bitmap((new Bitmapd13 as Bitmap).bitmapData));
 			bitmapDataList.push(new Bitmap((new Bitmapd1 as Bitmap).bitmapData));
-			
-			
-			
 		}
         
         //background image
         [Embed(source="../img/welcomeScreen.png")]
         public var WelcomeScreen:Class;
         
-        //spades
+		//spades
         [Embed(source="../img/s1.png")]
         public var Bitmaps1: Class;
         [Embed(source="../img/s2.png")]
@@ -505,7 +409,7 @@ import Animator;
         [Embed(source="../img/s13.png")]
         public var Bitmaps13: Class;
         
-        //hearts
+		//hearts
         [Embed(source="../img/h1.png")]
         public var Bitmaph1: Class;
         [Embed(source="../img/h2.png")]
@@ -533,7 +437,7 @@ import Animator;
         [Embed(source="../img/h13.png")]
         public var Bitmaph13: Class;
         
-        //clubs
+		//clubs
         [Embed(source="../img/c1.png")]
         public var Bitmapc1: Class;
         [Embed(source="../img/c2.png")]
@@ -561,7 +465,7 @@ import Animator;
         [Embed(source="../img/c13.png")]
         public var Bitmapc13: Class;
         
-        //diamonds
+		//diamonds
         [Embed(source="../img/d1.png")]
         public var Bitmapd1: Class;
         [Embed(source="../img/d2.png")]
@@ -591,10 +495,5 @@ import Animator;
 		
 		[Embed(source="../img/cover.png")]
 		public var coverBitmap: Class;
-		
-        
-        //card images
-        [Embed(source="../img/s1.png")]
-        public var s1Bitmap: Class;
     }
 }
