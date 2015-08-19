@@ -199,7 +199,10 @@ import Animator;
             }
 			if(isFirstPlayerMove) {
 				var cardIndex:int = computerMove();
-				if(isAllowed(cardIndex) ) moveCard(cardIndex)
+				if(isAllowed(cardIndex) ) {
+					moveCard(cardIndex);
+					showCard(cardIndex);
+				}
 			}
         }
 		
@@ -235,7 +238,10 @@ import Animator;
 	            isFirstPlayerMove = !isFirstPlayerMove;
 				if(isFirstPlayerMove) {
 					var cardIndex:int = computerMove();
-					if(isAllowed(cardIndex) ) moveCard(cardIndex)
+					if(isAllowed(cardIndex) ) {
+						moveCard(cardIndex);
+						showCard(cardIndex);
+					}
 				}
 			}
         }
@@ -258,6 +264,7 @@ import Animator;
 				if(countCardsOnHand(0)>0){
 					cardState[index] = hand; 
 					moveToPlayerHand(stack[index], i+1, hand);
+					if(hand==2)
 					showCard(index);
 				}
 			}
