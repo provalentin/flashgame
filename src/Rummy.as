@@ -284,7 +284,9 @@ import Animator;
 				for(var i:int=0;i<cardState.length;i++){
 					if(cardState[i]==3){
 						cardState[i]=isFirstPlayerMove?1:2;
-							moveToPlayer1Hand(stack[i], 6);
+						moveToPlayer1Hand(stack[i], 6);
+							if(isFirstPlayerMove) 
+								hideCard(i);
 					}
 				}
 			}
